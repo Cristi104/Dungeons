@@ -1,4 +1,6 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Dungeons
+Joc de strategie turn-based cu elemente de RPG.
+Esti un fost adventurier care a fost informat de o noua descoperire, dedesubtul unui sat alaturat a fost gasit de catre mineri un sistem de catacombe, crezut sa fie doar o legenda, plin de comori dar si de monstrii, care au inceput sa iasa la suprafata pentru a teroriza oameni satului, tu ai fost chemat de catre liderul satului pentru a conduce adventurierii neexperimentati prin catacombe in scopul eliminarii monstriilor si recuperarii comorilor ascunse.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
