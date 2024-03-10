@@ -109,6 +109,8 @@ add_executable(${PROJECT_NAME}
         env_fixes.h
         include/window.h
         src/window.cpp
+        include/userInterface.h
+        src/userInterface.cpp
 )
 
 ###############################################################################
