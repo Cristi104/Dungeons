@@ -7,15 +7,17 @@
 
 #include <map>
 
-class GameWindow : public sf::RenderWindow{
+class GameWindow {
 private:
+    sf::RenderWindow window;
     std::map<const std::string, sf::Texture> textures;
 public:
     GameWindow();
     GameWindow(const std::string& name_p, int x_p, int y_p);
-    ~GameWindow() override;
+    ~GameWindow();
     void loadTextures(const std::string& path_p);
     const sf::Texture& getTexture(const std::string& name_p);
+    sf::RenderWindow& getWindow();
 
 };
 

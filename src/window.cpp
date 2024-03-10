@@ -2,19 +2,19 @@
 #include <filesystem>
 #include <iostream>
 GameWindow::GameWindow() {
-    this->create(sf::VideoMode(1200, 720), "Hello World");
+    this->window.create(sf::VideoMode(1200, 720), "Hello World");
     this->loadTextures("../res/assets");
-    this->setFramerateLimit(60);
+    this->window.setFramerateLimit(60);
 }
 
 GameWindow::GameWindow(const std::string &name_p, int x_p, int y_p) {
-    this->create(sf::VideoMode(x_p, y_p), name_p);
+    this->window.create(sf::VideoMode(x_p, y_p), name_p);
     this->loadTextures("../res/assets");
-    this->setFramerateLimit(60);
+    this->window.setFramerateLimit(60);
 }
 
 GameWindow::~GameWindow(){
-    this->close();
+    this->window.close();
 }
 
 void GameWindow::loadTextures(const std::string &path_p) {
@@ -45,4 +45,8 @@ const sf::Texture& GameWindow::getTexture(const std::string &name_p) {
         textures[name_p].update(pixels);
         return textures[name_p];
     }
+}
+
+sf::RenderWindow& GameWindow::getWindow() {
+    return window;
 }

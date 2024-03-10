@@ -90,21 +90,21 @@ int main() {
 
     GameWindow window("Dungeons", 1024, 720);
     bool running = true;
-    while(window.isOpen() && running) {
+    while(window.getWindow().isOpen() && running) {
         sf::Event event{};
-        while(window.pollEvent(event)) {
+        while(window.getWindow().pollEvent(event)) {
             if(event.type == sf::Event::Closed) {
                 running = false;
                 break;
             }
         }
-        window.clear();
+        window.getWindow().clear();
         sf::Sprite sprite;
         sprite.setTexture(window.getTexture("Noone"));
         sprite.setScale(500.0f,500.0f);
-        window.draw(sprite);
+        window.getWindow().draw(sprite);
 
-        window.display();
+        window.getWindow().display();
     }
 //    std::cout << "Test getTexture address: " << &window.getTexture("Noone") << "\n";
 //    sf::RenderWindow window;
