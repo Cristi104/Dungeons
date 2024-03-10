@@ -2,13 +2,19 @@
 #include <filesystem>
 #include <iostream>
 GameWindow::GameWindow() {
-    this->window.create(sf::VideoMode(1200, 720), "Hello World");
+    this->create(sf::VideoMode(1200, 720), "Hello World");
     this->loadTextures("../res/assets");
+    this->setFramerateLimit(60);
 }
 
 GameWindow::GameWindow(const std::string &name_p, int x_p, int y_p) {
-    this->window.create(sf::VideoMode(x_p, y_p), name_p);
+    this->create(sf::VideoMode(x_p, y_p), name_p);
     this->loadTextures("../res/assets");
+    this->setFramerateLimit(60);
+}
+
+GameWindow::~GameWindow(){
+    this->close();
 }
 
 void GameWindow::loadTextures(const std::string &path_p) {
@@ -28,5 +34,9 @@ void GameWindow::loadTextures(const std::string &path_p) {
 }
 
 const sf::Texture& GameWindow::getTexture(const std::string &name_p) {
-    return textures.at(name_p);
+    try {
+        return textures.at(name_p);
+    }catch(std::out_of_range&){
+        std::cout << "Missing texture: " << name_p << "\n";
+    }
 }
