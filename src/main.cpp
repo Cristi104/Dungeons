@@ -4,6 +4,7 @@
 
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
@@ -98,10 +99,14 @@ int main() {
             }
         }
         window.clear();
-        //draw
+        sf::Sprite sprite;
+        sprite.setTexture(window.getTexture("Noone"));
+        sprite.setScale(500.0f,500.0f);
+        window.draw(sprite);
+
         window.display();
     }
-    std::cout << "Test getTexture address: " << &window.getTexture("None") << "\n";
+//    std::cout << "Test getTexture address: " << &window.getTexture("Noone") << "\n";
 //    sf::RenderWindow window;
 //    ///////////////////////////////////////////////////////////////////////////
 //    /// NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:31

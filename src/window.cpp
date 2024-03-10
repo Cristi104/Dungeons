@@ -37,6 +37,12 @@ const sf::Texture& GameWindow::getTexture(const std::string &name_p) {
     try {
         return textures.at(name_p);
     }catch(std::out_of_range&){
+        //In cazul in care textura lipseste creaza o noua textura care sa semnalizeze acest fapt
         std::cout << "Missing texture: " << name_p << "\n";
+        textures[name_p].create(2,2);
+        sf::Uint8 pixels[] = {255,0,255,255,0,0,0,255,
+                              0,0,0,255,255,0,255,255};
+        textures[name_p].update(pixels);
+        return textures[name_p];
     }
 }
