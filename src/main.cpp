@@ -5,6 +5,7 @@
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include "../include/window.h"
 
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
@@ -13,7 +14,6 @@
 #include "../env_fixes.h"                                              //
 //////////////////////////////////////////////////////////////////////
 
-#include "../include/window.h"
 
 //////////////////////////////////////////////////////////////////////
 /// This class is used to test that the memory leak checks work as expected even when using a GUI
@@ -100,7 +100,7 @@ int main() {
         }
         window.getWindow().clear();
         sf::Sprite sprite;
-        sprite.setTexture(window.getTexture("Noone"));
+        sprite.setTexture(window.getTexture("test"));
         sprite.setScale(500.0f,500.0f);
         window.getWindow().draw(sprite);
 
