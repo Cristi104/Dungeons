@@ -28,7 +28,7 @@ env:
   EXT_DIR: "ext"
   BIN_DIR: "bin"
   GEN_DIR: "generated"
-  APP_WINDOW: "My Window"
+  APP_WINDOW: "Dungeons"
 
 defaults:
   run:

@@ -2,13 +2,13 @@
 #include <filesystem>
 #include <iostream>
 GameWindow::GameWindow() {
-    this->window.create(sf::VideoMode(1200, 720), "Hello World");
+    this->window.create(sf::VideoMode(1200, 720), "Hello World", sf::Style::Default);
     this->loadTextures("../res/assets");
     this->window.setFramerateLimit(60);
 }
 
 GameWindow::GameWindow(const std::string &name_p, int x_p, int y_p) {
-    this->window.create(sf::VideoMode(x_p, y_p), name_p);
+    this->window.create(sf::VideoMode(x_p, y_p), name_p, sf::Style::Default);
     this->loadTextures("../res/assets");
     this->window.setFramerateLimit(60);
 }
