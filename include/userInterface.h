@@ -25,11 +25,12 @@ class Label : public Component {
 private:
     sf::Text text;
     static sf::Font font;
+    void setText(const std::string& text_p, int maxLength_p);
 public:
     static void initFont();
     Label();
+    explicit Label(const std::string& text_p, int maxLength_p = 12);
     ~Label() override = default;
-    void setText(const std::string& text_p, int maxLength_p);
     void draw(sf::RenderWindow& window_p) override;
 };
 
@@ -38,9 +39,27 @@ private:
     sf::IntRect boundingBox;
     sf::Sprite icon;
 public:
+    Button();
+    ~Button() override = default;
     bool isPressed();
     void setBoundingBox(const sf::IntRect& boundingBox_p);
     sf::Sprite& getIcon();
     void draw(sf::RenderWindow& window_p) override;
+};
+
+class Panel {
+private:
+    std::vector<Component> components;
+    std::vector<Button> buttons;
+    bool isShown;
+public:
+    Panel();
+    ~Panel() = default;
+    void draw(sf::RenderWindow& window_p);
+    void addComponent(const Component& component_p);
+    void addButton(const Button& button_p);
+    void toggleVisibility();
+    Component& getComponent(int index_p);
+    Button& getButton(int index_p);
 };
 #endif //OOP_USERINTERFACE_H

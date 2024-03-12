@@ -5,7 +5,6 @@
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include "../include/window.h"
 #include "../include/userInterface.h"
 //////////////////////////////////////////////////////////////////////
@@ -91,6 +90,8 @@ int main() {
     Label::initFont();
     GameWindow window("Dungeons", (int)sf::VideoMode::getDesktopMode().width, (int)sf::VideoMode::getDesktopMode().height);
     bool running = true;
+    Panel testPanel;
+    testPanel.toggleVisibility();
     while(window.getWindow().isOpen() && running) {
         sf::Event event{};
         while(window.getWindow().pollEvent(event)) {
@@ -110,7 +111,7 @@ int main() {
         sf::Sprite sprite;
         sprite.setTexture(window.getTexture("test"));
         sprite.setScale(500.0f,500.0f);
-        window.getWindow().draw(sprite);
+//        window.getWindow().draw(sprite);
 //        sf::Text text;
 //        sf::Font font;
 //        font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf");
@@ -119,13 +120,20 @@ int main() {
 //        text.setLetterSpacing(0.5f);
 //        text.setString("test text\npentru sfml");
 //        window.getWindow().draw(text);
-        Label text;
-        text.setText("test text cu wrapping prin sfml", 12);
-        text.draw(window.getWindow());
+//        Label text;
+//        text.setText("test text cu wrapping prin sfml", 12);
+//        text.draw(window.getWindow());
 //        int x = sf::Mouse::getPosition().x;
 //        int y = sf::Mouse::getPosition().y;
 //        std::cout<<x<<' '<<y<<'\n';
-        std::cout<<sf::VideoMode::getDesktopMode().width<<", "<<sf::VideoMode::getDesktopMode().height<<'\n';
+//        std::cout<<sf::VideoMode::getDesktopMode().width<<", "<<sf::VideoMode::getDesktopMode().height<<'\n';
+
+        testPanel.addComponent(Label("Test text pentru Panel class"));
+        testPanel.addComponent(Component());
+        testPanel.getComponent(2).getSprite().setTexture(window.getTexture("test"));
+        testPanel.addButton(Button());
+        if(testPanel.getButton(1).isPressed())std::cout<<"Pressed\n";
+        testPanel.draw(window.getWindow());
         window.getWindow().display();
     }
 //    std::cout << "Test getTexture address: " << &window.getTexture("Noone") << "\n";
