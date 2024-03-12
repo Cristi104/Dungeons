@@ -5,8 +5,9 @@
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include "../include/window.h"
-
+#include "../include/userInterface.h"
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
 /// You can remove this include and the call from main              //
@@ -87,7 +88,7 @@ int main() {
     SomeClass *c = getC();
     std::cout << c << "\n";
     delete c;
-
+    Label::initFont();
     GameWindow window("Dungeons", 1024, 720);
     bool running = true;
     while(window.getWindow().isOpen() && running) {
@@ -103,7 +104,17 @@ int main() {
         sprite.setTexture(window.getTexture("test"));
         sprite.setScale(500.0f,500.0f);
         window.getWindow().draw(sprite);
-
+//        sf::Text text;
+//        sf::Font font;
+//        font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf");
+//        text.setFont(font);
+//        text.setCharacterSize(12);
+//        text.setLetterSpacing(0.5f);
+//        text.setString("test text\npentru sfml");
+//        window.getWindow().draw(text);
+        Label text;
+        text.setText("test text cu wrapping prin sfml", 12);
+        text.draw(window.getWindow());
         window.getWindow().display();
     }
 //    std::cout << "Test getTexture address: " << &window.getTexture("Noone") << "\n";
