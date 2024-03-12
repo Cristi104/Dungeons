@@ -8,7 +8,7 @@ GameWindow::GameWindow() {
 }
 
 GameWindow::GameWindow(const std::string &name_p, int x_p, int y_p) {
-    this->window.create(sf::VideoMode(x_p, y_p), name_p, sf::Style::Default);
+    this->window.create(sf::VideoMode(x_p, y_p), name_p, sf::Style::Fullscreen);
     this->loadTextures("../res/assets");
     this->window.setFramerateLimit(60);
 }

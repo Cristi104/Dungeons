@@ -67,3 +67,28 @@ void Label::draw(sf::RenderWindow &window) {
     window.draw(this->getSprite());
     window.draw(this->text);
 }
+
+//Button
+bool Button::isPressed() {
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+        int x = sf::Mouse::getPosition().x;
+        int y = sf::Mouse::getPosition().y;
+        return this->boundingBox.contains(x,y);
+    }
+    return false;
+}
+
+void Button::setBoundingBox(const sf::IntRect &boundingBox_p) {
+    this->boundingBox = boundingBox_p;
+}
+
+sf::Sprite &Button::getIcon() {
+    return this->icon;
+}
+
+void Button::draw(sf::RenderWindow &window_p) {
+    window_p.draw(this->getSprite());
+    window_p.draw(this->icon);
+}
+
+

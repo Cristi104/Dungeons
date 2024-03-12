@@ -89,7 +89,7 @@ int main() {
     std::cout << c << "\n";
     delete c;
     Label::initFont();
-    GameWindow window("Dungeons", 1024, 720);
+    GameWindow window("Dungeons", (int)sf::VideoMode::getDesktopMode().width, (int)sf::VideoMode::getDesktopMode().height);
     bool running = true;
     while(window.getWindow().isOpen() && running) {
         sf::Event event{};
@@ -98,6 +98,13 @@ int main() {
                 running = false;
                 break;
             }
+            if(event.type== sf::Event::KeyPressed){
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+                    running = false;
+                    break;
+                }
+            }
+
         }
         window.getWindow().clear();
         sf::Sprite sprite;
@@ -115,6 +122,10 @@ int main() {
         Label text;
         text.setText("test text cu wrapping prin sfml", 12);
         text.draw(window.getWindow());
+//        int x = sf::Mouse::getPosition().x;
+//        int y = sf::Mouse::getPosition().y;
+//        std::cout<<x<<' '<<y<<'\n';
+        std::cout<<sf::VideoMode::getDesktopMode().width<<", "<<sf::VideoMode::getDesktopMode().height<<'\n';
         window.getWindow().display();
     }
 //    std::cout << "Test getTexture address: " << &window.getTexture("Noone") << "\n";
