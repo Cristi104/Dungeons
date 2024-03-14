@@ -111,6 +111,8 @@ add_executable(${PROJECT_NAME}
         src/window.cpp
         include/userInterface.h
         src/userInterface.cpp
+        include/entity.h
+        src/entity.cpp
 )
 
 ###############################################################################

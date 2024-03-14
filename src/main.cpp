@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../include/window.h"
 #include "../include/userInterface.h"
+#include "../include/entity.h"
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
 /// You can remove this include and the call from main              //
@@ -92,6 +93,8 @@ int main() {
     bool running = true;
     Panel testPanel;
     testPanel.toggleVisibility();
+    Entity testEntity;
+    std::cout << testEntity;
     while(window.getWindow().isOpen() && running) {
         sf::Event event{};
         while(window.getWindow().pollEvent(event)) {
