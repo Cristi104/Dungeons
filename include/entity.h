@@ -1,11 +1,12 @@
 #ifndef OOP_ENTITY_H
 #define OOP_ENTITY_H
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <string>
 #include <vector>
 #include <ostream>
 #include <istream>
+#include "../include/settings.h"
 
 enum EffectType{
     SPEED = 1,
@@ -87,7 +88,7 @@ public:
 
 class Entity {
 private:
-    sf::Sprite sprite;
+    sf::RectangleShape sprite;
     std::string name;
     std::string textureName;
     Stats stats;
@@ -99,6 +100,7 @@ private:
 public:
     Entity();
     ~Entity();
+    sf::RectangleShape& getRectangleShape();
     friend std::ostream& operator<<(std::ostream& out, const Entity& entity);
     friend std::istream& operator>>(std::istream& in, Entity& entity);
     void applyStatusEffect(const StatusEffect& statusEffect);

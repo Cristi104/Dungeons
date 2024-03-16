@@ -7,7 +7,7 @@ Component::Component() {
     this->priority = 0;
 }
 
-sf::Sprite &Component::getSprite() {
+sf::RectangleShape &Component::getRectangleShape() {
     return this->sprite;
 }
 
@@ -72,7 +72,7 @@ Label::Label(const std::string& text_p, int maxLength_p) {
 }
 
 void Label::draw(sf::RenderWindow &window) {
-    window.draw(this->getSprite());
+    window.draw(this->getRectangleShape());
     window.draw(this->text);
 }
 
@@ -95,12 +95,12 @@ void Button::setBoundingBox(const sf::IntRect &boundingBox_p) {
     this->boundingBox = boundingBox_p;
 }
 
-sf::Sprite &Button::getIcon() {
+sf::RectangleShape &Button::getIcon() {
     return this->icon;
 }
 
 void Button::draw(sf::RenderWindow &window_p) {
-    window_p.draw(this->getSprite());
+    window_p.draw(this->getRectangleShape());
     window_p.draw(this->getIcon());
 }
 

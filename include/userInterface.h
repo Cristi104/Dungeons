@@ -3,19 +3,19 @@
 
 #include <vector>
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
 
 class Component {
 private:
-    sf::Sprite sprite;
+    sf::RectangleShape sprite;
     int priority;
 public:
     Component();
     virtual ~Component() = default;
-    sf::Sprite& getSprite();
+    sf::RectangleShape& getRectangleShape();
     virtual void draw(sf::RenderWindow& window_p);
     void setPriority(int priority_p);
     int getPriority() const;
@@ -37,13 +37,13 @@ public:
 class Button : public Component {
 private:
     sf::IntRect boundingBox;
-    sf::Sprite icon;
+    sf::RectangleShape icon;
 public:
     Button();
     ~Button() override = default;
     bool isPressed();
     void setBoundingBox(const sf::IntRect& boundingBox_p);
-    sf::Sprite& getIcon();
+    sf::RectangleShape& getIcon();
     void draw(sf::RenderWindow& window_p) override;
 };
 

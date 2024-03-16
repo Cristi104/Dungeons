@@ -161,6 +161,10 @@ Entity::~Entity() {
     delete[] this->moves;
 }
 
+sf::RectangleShape &Entity::getRectangleShape() {
+    return this->sprite;
+}
+
 std::ostream& operator<<(std::ostream& out, const Entity& entity) {
     out << entity.name << '\n' << entity.textureName << '\n' << entity.stats << entity.health << ' ' << entity.maxHealth << ' ' << static_cast<int>(entity.position) << '\n';
     out << entity.statusEffects.size() << '\n';

@@ -1,15 +1,16 @@
 #include "../include/window.h"
 #include <filesystem>
 #include <iostream>
+std::map<const std::string, sf::Texture> GameWindow::textures;
 GameWindow::GameWindow() {
     this->window.create(sf::VideoMode(1200, 720), "Hello World", sf::Style::Default);
-    this->loadTextures("../res/assets");
+    GameWindow::loadTextures("../res/assets");
     this->window.setFramerateLimit(60);
 }
 
 GameWindow::GameWindow(const std::string &name_p, int x_p, int y_p) {
     this->window.create(sf::VideoMode(x_p, y_p), name_p, sf::Style::Fullscreen);
-    this->loadTextures("../res/assets");
+    GameWindow::loadTextures("../res/assets");
     this->window.setFramerateLimit(60);
 }
 
@@ -28,22 +29,22 @@ void GameWindow::loadTextures(const std::string &path_p) {
             std::cout<< "Failed to load texture at " << filePath << '\n';
         } else {
             textureName = filePath.substr(path_p.size() + 1, filePath.size()- path_p.size() - 1 - 4);
-            textures.insert(std::pair<const std::string, sf::Texture>(textureName, texture));
+            GameWindow::textures.insert(std::pair<const std::string, sf::Texture>(textureName, texture));
         }
     }
 }
 
-const sf::Texture& GameWindow::getTexture(const std::string &name_p) {
+const sf::Texture* GameWindow::getTexture(const std::string &name_p) {
     try {
-        return textures.at(name_p);
+        return &GameWindow::textures.at(name_p);
     }catch(std::out_of_range&){
         //In cazul in care textura lipseste creaza o noua textura care sa semnalizeze acest fapt
         std::cout << "Missing texture: " << name_p << "\n";
-        textures[name_p].create(2,2);
+        GameWindow::textures[name_p].create(2,2);
         sf::Uint8 pixels[] = {255,0,255,255,0,0,0,255,
                               0,0,0,255,255,0,255,255};
-        textures[name_p].update(pixels);
-        return textures[name_p];
+        GameWindow::textures[name_p].update(pixels);
+        return &GameWindow::textures[name_p];
     }
 }
 

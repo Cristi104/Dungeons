@@ -113,6 +113,10 @@ add_executable(${PROJECT_NAME}
         src/userInterface.cpp
         include/entity.h
         src/entity.cpp
+        include/settings.h
+        include/fightScreen.h
+        src/fightScreen.cpp
+        src/settings.cpp
 )
 
 ###############################################################################

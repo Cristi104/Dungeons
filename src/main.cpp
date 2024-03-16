@@ -4,10 +4,10 @@
 
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/Sprite.hpp>
 #include "../include/window.h"
 #include "../include/userInterface.h"
 #include "../include/entity.h"
+#include "../include/fightScreen.h"
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
 /// You can remove this include and the call from main              //
@@ -111,9 +111,11 @@ int main() {
 
         }
         window.getWindow().clear();
-        sf::Sprite sprite;
-        sprite.setTexture(window.getTexture("test"));
-        sprite.setScale(500.0f,500.0f);
+        FightScreen fightScreen;
+        fightScreen.draw(window.getWindow());
+//        sf::Sprite sprite;
+//        sprite.setTexture(*GameWindow::getTexture("test"));
+//        sprite.setScale(500.0f,500.0f);
 //        window.getWindow().draw(sprite);
 //        sf::Text text;
 //        sf::Font font;
@@ -131,12 +133,12 @@ int main() {
 //        std::cout<<x<<' '<<y<<'\n';
 //        std::cout<<sf::VideoMode::getDesktopMode().width<<", "<<sf::VideoMode::getDesktopMode().height<<'\n';
 
-        testPanel.addComponent(Label("Test text pentru Panel class"));
-        testPanel.addComponent(Component());
-        testPanel.getComponent(2).getSprite().setTexture(window.getTexture("test"));
-        testPanel.addButton(Button());
-        if(testPanel.getButton(1).isPressed())std::cout<<"Pressed\n";
-        testPanel.draw(window.getWindow());
+//        testPanel.addComponent(Label("Test text pentru Panel class"));
+//        testPanel.addComponent(Component());
+//        testPanel.getComponent(2).getRectangleShape().setTexture(GameWindow::getTexture("test"));
+//        testPanel.addButton(Button());
+//        if(testPanel.getButton(1).isPressed())std::cout<<"Pressed\n";
+//        testPanel.draw(window.getWindow());
         window.getWindow().display();
     }
 //    std::cout << "Test getTexture address: " << &window.getTexture("Noone") << "\n";
