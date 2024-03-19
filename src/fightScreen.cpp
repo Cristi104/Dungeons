@@ -38,8 +38,8 @@ sf::Vector2f FightScreen::getCoordsOfIndex(int index) {
 }
 
 void FightScreen::addEntity(const Entity &entity) {
-    //TODO:
-    //need copy constructors / operator= for class Entity
+    int index = FightScreen::getIndex(entity.getPosition());
+    (*this->entities[index]) = entity;
 }
 
 void FightScreen::swapEntities(Positions position1, Positions position2) {

@@ -35,8 +35,9 @@ private:
     int chance;
 public:
     StatusEffect();
-    StatusEffect(EffectType type_p, int value_p, int duration_p, int chance_p);
-    StatusEffect(const StatusEffect& statusEffect_p);
+    StatusEffect(EffectType type, int value, int duration, int chance);
+    StatusEffect(const StatusEffect& statusEffect);
+    StatusEffect& operator=(const StatusEffect& statusEffect);
     ~StatusEffect() = default;
     [[nodiscard]] EffectType getType() const;
     [[nodiscard]] int getValue() const;
@@ -58,6 +59,8 @@ private:
     bool aoe;
 public:
     Move();
+    Move(const Move& move);
+    Move& operator=(const Move& move);
     ~Move() = default;
     friend std::ostream& operator<<(std::ostream& out, const Move& move);
     friend std::istream& operator>>(std::istream& in, Move& move);
@@ -79,6 +82,7 @@ private:
     int burn = 50;
 public:
     Stats() = default;
+    Stats& operator=(const Stats& stats);
     ~Stats() = default;
     friend std::ostream& operator<<(std::ostream& out, const Stats& stats);
     friend std::istream& operator>>(std::istream& in, Stats& stats);
@@ -99,6 +103,8 @@ private:
     Move* moves;
 public:
     Entity();
+    Entity(const Entity& entity);
+    Entity& operator=(const Entity& entity);
     ~Entity();
     sf::RectangleShape& getRectangleShape();
     friend std::ostream& operator<<(std::ostream& out, const Entity& entity);
@@ -107,6 +113,7 @@ public:
     void removeStatusEffect(int index);
     void getHit(const Move& move);
     void turn();
+    Positions getPosition() const;
 };
 
 #endif //OOP_ENTITY_H

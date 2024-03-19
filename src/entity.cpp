@@ -9,19 +9,21 @@ StatusEffect::StatusEffect() {
     this->chance = 0;
 }
 
-StatusEffect::StatusEffect(EffectType type_p, int value_p, int duration_p, int chance_p) {
-    this->type = type_p;
-    this->value = value_p;
-    this->duration = duration_p;
-    this->chance = chance_p;
+StatusEffect::StatusEffect(EffectType type, int value, int duration, int chance) {
+    this->type = type;
+    this->value = value;
+    this->duration = duration;
+    this->chance = chance;
 }
 
-StatusEffect::StatusEffect(const StatusEffect &statusEffect_p) {
-    this->type = statusEffect_p.type;
-    this->value = statusEffect_p.value;
-    this->duration = statusEffect_p.duration;
-    this->chance = statusEffect_p.chance;
+StatusEffect::StatusEffect(const StatusEffect& statusEffect) {
+    this->type = statusEffect.type;
+    this->value = statusEffect.value;
+    this->duration = statusEffect.duration;
+    this->chance = statusEffect.chance;
 }
+
+StatusEffect& StatusEffect::operator=(const StatusEffect& statusEffect) = default;
 
 EffectType StatusEffect::getType() const {
     return type;
@@ -67,6 +69,18 @@ Move::Move() {
     this->aoe = false;
 }
 
+Move::Move(const Move& move) {
+    this->name = move.name;
+    this->castPosition = move.castPosition;
+    this->range = move.range;
+    this->accuracy = move.accuracy;
+    this->damage = move.damage;
+    this->aoe = move.aoe;
+    this->statusEffect = move.statusEffect;
+}
+
+Move& Move::operator=(const Move& move) = default;
+
 std::ostream& operator<<(std::ostream& out, const Move& move) {
     out << move.name << '\n' << static_cast<int>(move.castPosition) << ' ' << static_cast<int>(move.range) << ' ' << move.accuracy << ' ' << move.damage << ' ' << move.statusEffect << move.aoe << '\n';
     return out;
@@ -80,7 +94,7 @@ std::istream& operator>>(std::istream& in, Move& move) {
     return in;
 }
 
-const std::string &Move::getName() const {
+const std::string& Move::getName() const {
     return name;
 }
 
@@ -100,7 +114,7 @@ int Move::getDamage() const {
     return damage;
 }
 
-const StatusEffect &Move::getStatusEffect() const {
+const StatusEffect& Move::getStatusEffect() const {
     return statusEffect;
 }
 
@@ -118,6 +132,8 @@ std::istream& operator>>(std::istream& in, Stats& stats) {
     in >> stats.speed >> stats.accuracy >> stats.stun >> stats.bleed >> stats.burn;
     return in;
 }
+
+Stats& Stats::operator=(const Stats& stats) = default;
 
 int Stats::getValue(EffectType type) const {
     switch (type) {
@@ -157,11 +173,38 @@ Entity::Entity() {
     this->statusEffects.resize(0);
 }
 
+Entity::Entity(const Entity &entity) {
+    this->sprite = entity.sprite;
+    this->name = entity.name;
+    this->textureName = entity.textureName;
+    this->moves = new Move[4];
+    for(int i = 0; i < 4; i++)
+        this->moves[i] = entity.moves[i];
+    this->health = entity.health;
+    this->maxHealth = entity.maxHealth;
+    this->position = entity.position;
+    this->statusEffects = entity.statusEffects;
+}
+
+Entity &Entity::operator=(const Entity &entity) {
+    this->sprite = entity.sprite;
+    this->name = entity.name;
+    this->textureName = entity.textureName;
+    this->stats = entity.stats;
+    this->health = entity.health;
+    this->maxHealth = entity.maxHealth;
+    this->position = entity.position;
+    this->statusEffects = entity.statusEffects;
+    for(int i = 0; i < 4; i++)
+        this->moves[i] = entity.moves[i];
+    return *this;
+}
+
 Entity::~Entity() {
     delete[] this->moves;
 }
 
-sf::RectangleShape &Entity::getRectangleShape() {
+sf::RectangleShape& Entity::getRectangleShape() {
     return this->sprite;
 }
 
@@ -188,7 +231,7 @@ std::istream& operator>>(std::istream& in, Entity& entity) {
     return in;
 }
 
-void Entity::applyStatusEffect(const StatusEffect &statusEffect) {
+void Entity::applyStatusEffect(const StatusEffect& statusEffect) {
     this->statusEffects.push_back(statusEffect);
     this->stats.setValue(statusEffect.getType(),
                          this->stats.getValue(statusEffect.getType())
@@ -202,7 +245,7 @@ void Entity::removeStatusEffect(int index) {
     statusEffects.erase(std::next(statusEffects.begin(),index));
 }
 
-void Entity::getHit(const Move &move) {
+void Entity::getHit(const Move& move) {
     std::random_device device;
     std::mt19937 gen(device());
     std::uniform_int_distribution<> random(1,100);
@@ -227,4 +270,8 @@ void Entity::turn() {
             n--;
         }
     }
+}
+
+Positions Entity::getPosition() const {
+    return position;
 }
