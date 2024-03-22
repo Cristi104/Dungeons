@@ -1,4 +1,4 @@
-#include "../include/settings.h"
+#include "../include/Settings.h"
 //
 //int Settings::resolutionWidth = (int)sf::VideoMode::getDesktopMode().width;
 //int Settings::resolutionHeight = (int)sf::VideoMode::getDesktopMode().height;

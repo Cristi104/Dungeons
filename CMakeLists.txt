@@ -109,14 +109,28 @@ add_executable(${PROJECT_NAME}
         env_fixes.h
         include/window.h
         src/window.cpp
-        include/userInterface.h
-        src/userInterface.cpp
-        include/entity.h
-        src/entity.cpp
-        include/settings.h
-        include/fightScreen.h
-        src/fightScreen.cpp
-        src/settings.cpp
+        include/Panel.h
+        src/Panel.cpp
+        include/Entity.h
+        src/Entity.cpp
+        include/Settings.h
+        include/FightScreen.h
+        src/FightScreen.cpp
+        src/Settings.cpp
+        include/EffectType.h
+        include/Positions.h
+        include/StatusEffect.h
+        src/StatusEffect.cpp
+        include/Move.h
+        src/Move.cpp
+        include/Stats.h
+        src/Stats.cpp
+        include/Component.h
+        src/Component.cpp
+        include/Label.h
+        src/Label.cpp
+        src/Button.cpp
+        include/Button.h
 )
 
 ###############################################################################

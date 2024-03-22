@@ -1,15 +1,15 @@
-#include "../include/fightScreen.h"
+#include "../include/FightScreen.h"
 
 FightScreen::FightScreen() {
     this->entities = new Entity*[8];
     for(int i = 0; i < 8; i++)
         this->entities[i] = nullptr;
-    this->fightPanel = Panel();
-    Component backGround;
-    backGround.getRectangleShape().setPosition(0, 600.0f * Settings::getScaleHeight());
-    backGround.getRectangleShape().setTexture(GameWindow::getTexture("PanelBackGround"));
-    backGround.getRectangleShape().setSize(sf::Vector2f((float)Settings::getResolutionWidth(), 180 * Settings::getScaleHeight()));
-    fightPanel.addComponent(backGround);
+//    this->fightPanel = Panel();
+//    Component backGround;
+//    backGround.getRectangleShape().setPosition(0, 600.0f * Settings::getScaleHeight());
+//    backGround.getRectangleShape().setTexture(GameWindow::getTexture("PanelBackGround"));
+//    backGround.getRectangleShape().setSize(sf::Vector2f((float)Settings::getResolutionWidth(), 180 * Settings::getScaleHeight()));
+//    fightPanel.addComponent(backGround);
 }
 
 FightScreen::~FightScreen() {

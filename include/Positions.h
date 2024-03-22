@@ -1,0 +1,15 @@
+#ifndef OOP_POSITIONS_H
+#define OOP_POSITIONS_H
+
+enum Positions{
+    BACKALLY1 = 1,
+    BACKALLY2 = 2,
+    FRONTALLY1 = 4,
+    FRONTALLY2 = 8,
+    BACKENEMY1 = 16,
+    BACKENEMY2 = 32,
+    FRONTENEMY1 = 64,
+    FRONTENEMY2 = 128
+};
+
+#endif //OOP_POSITIONS_H

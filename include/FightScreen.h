@@ -1,8 +1,8 @@
 #ifndef OOP_FIGHTSCREEN_H
 #define OOP_FIGHTSCREEN_H
 
-#include "../include/entity.h"
-#include "../include/userInterface.h"
+#include "../include/Entity.h"
+#include "../include/Panel.h"
 #include "../include/window.h"
 
 class FightScreen {

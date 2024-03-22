@@ -5,9 +5,9 @@
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
 #include "../include/window.h"
-#include "../include/userInterface.h"
-#include "../include/entity.h"
-#include "../include/fightScreen.h"
+#include "../include/Panel.h"
+#include "../include/Entity.h"
+#include "../include/FightScreen.h"
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
 /// You can remove this include and the call from main              //
@@ -102,13 +102,12 @@ int main() {
                 running = false;
                 break;
             }
-            if(event.type== sf::Event::KeyPressed){
+            if(event.type == sf::Event::KeyPressed){
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                     running = false;
                     break;
                 }
             }
-
         }
         window.getWindow().clear();
         FightScreen fightScreen;
@@ -136,8 +135,8 @@ int main() {
 //        testPanel.addComponent(Label("Test text pentru Panel class"));
 //        testPanel.addComponent(Component());
 //        testPanel.getComponent(2).getRectangleShape().setTexture(GameWindow::getTexture("test"));
-//        testPanel.addButton(Button());
-//        if(testPanel.getButton(1).isPressed())std::cout<<"Pressed\n";
+        testPanel.addButton(Button());
+        if(testPanel.getButton(1).isPressed())std::cout<<"Pressed\n";
 //        testPanel.draw(window.getWindow());
         window.getWindow().display();
     }
