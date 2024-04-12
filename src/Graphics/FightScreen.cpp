@@ -1,4 +1,6 @@
-#include "../include/FightScreen.h"
+#include "../../include/Graphics/FightScreen.h"
+
+FightScreen* FightScreen::singleton = nullptr;
 
 FightScreen::FightScreen() {
     this->entities = new Entity*[8];
@@ -28,11 +30,11 @@ int FightScreen::getIndex(Positions position) {
 
 sf::Vector2f FightScreen::getCoordsOfIndex(int index) {
     sf::Vector2f position;
-    position.y = 200 * Settings::getScaleHeight();
+    position.y = 200 * Settings::getSingleton()->getScaleHeight();
     if(index < 4){
-        position.x = (float)(210 + 90 * index) * Settings::getScaleWidth();
+        position.x = (float)(210 + 90 * index) * Settings::getSingleton()->getScaleWidth();
     } else {
-        position.x = (float)(290 + 90 * index) * Settings::getScaleWidth();
+        position.x = (float)(290 + 90 * index) * Settings::getSingleton()->getScaleWidth();
     }
     return position;
 }
@@ -74,4 +76,10 @@ void FightScreen::draw(sf::RenderWindow &window) {
         if(entities[i] != nullptr)
             window.draw(entities[i]->getRectangleShape());
     fightPanel.draw(window);
+}
+
+FightScreen *FightScreen::getSingleton() {
+    if(FightScreen::singleton == nullptr)
+        FightScreen::singleton = new FightScreen;
+    return FightScreen::singleton;
 }
