@@ -4,15 +4,17 @@
 
 #include <Helper.h>
 #include <SFML/Window/Event.hpp>
-#include "../include/window.h"
-#include "../include/Panel.h"
-#include "../include/Entity.h"
-#include "../include/FightScreen.h"
+#include "include/Graphics/window.h"
+#include "include/UserInterface/Panel.h"
+#include "include/Entity/Entity.h"
+#include "include/Graphics/FightScreen.h"
 //////////////////////////////////////////////////////////////////////
 /// NOTE: this include is needed for environment-specific fixes     //
 /// You can remove this include and the call from main              //
 /// if you have tested on all environments, and it works without it //
-#include "../env_fixes.h"                                              //
+#include "env_fixes.h"                                              //
+#include "include/UserInterface/Border.h"
+#include "include/Map/Map.h"
 //////////////////////////////////////////////////////////////////////
 
 
@@ -35,10 +37,10 @@ int main() {
     init_threads();                                                       //
     ////////////////////////////////////////////////////////////////////////
     ///
-    std::cout << "Hello, world!\n";
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
+//    std::cout << "Hello, world!\n";
+//    std::array<int, 100> v{};
+//    int nr;
+//    std::cout << "Introduceți nr: ";
     /////////////////////////////////////////////////////////////////////////
     /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
     /// dați exemple de date de intrare folosind fișierul tastatura.txt
@@ -59,17 +61,17 @@ int main() {
     /// program care merg (și să le evitați pe cele care nu merg).
     ///
     /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
+//    std::cin >> nr;
     /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
-    }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
+//    for(int i = 0; i < nr; ++i) {
+//        std::cout << "v[" << i << "] = ";
+//        std::cin >> v[i];
+//    }
+//    std::cout << "\n\n";
+//    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
+//    for(int i = 0; i < nr; ++i) {
+//        std::cout << "- " << v[i] << "\n";
+//    }
     ///////////////////////////////////////////////////////////////////////////
     /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
     /// alt fișier propriu cu ce alt nume doriți.
@@ -92,8 +94,20 @@ int main() {
     GameWindow window("Dungeons", (int)sf::VideoMode::getDesktopMode().width, (int)sf::VideoMode::getDesktopMode().height);
     bool running = true;
     Panel testPanel;
+    testPanel.addComponent(new Border({500,500,512,512},1));
+
     testPanel.toggleVisibility();
+//    Component* component = new Component;
+//    testPanel.addComponent(component);
+//    testPanel.getComponent(0)->getRectangleShape().setSize({100, 100});
+//    testPanel.getComponent(0)->getRectangleShape().setTexture(GameWindow::getTexture("None"));
     Entity testEntity;
+    Map map;
+    map.getSprite().setSize({1000, 1000});
+//    Room* room = new Room;
+//    room->clear();
+//    std::cout<<room->getEvent();
+//    map.getSprite().setSize(sf::Vector2f(500,500));
     std::cout << testEntity;
     while(window.getWindow().isOpen() && running) {
         sf::Event event{};
@@ -110,8 +124,8 @@ int main() {
             }
         }
         window.getWindow().clear();
-        FightScreen fightScreen;
-        fightScreen.draw(window.getWindow());
+//        FightScreen::getSingleton()->draw(window.getWindow());
+        window.getWindow().draw(map.getSprite());
 //        sf::Sprite sprite;
 //        sprite.setTexture(*GameWindow::getTexture("test"));
 //        sprite.setScale(500.0f,500.0f);
@@ -135,8 +149,6 @@ int main() {
 //        testPanel.addComponent(Label("Test text pentru Panel class"));
 //        testPanel.addComponent(Component());
 //        testPanel.getComponent(2).getRectangleShape().setTexture(GameWindow::getTexture("test"));
-        testPanel.addButton(Button());
-        if(testPanel.getButton(1).isPressed())std::cout<<"Pressed\n";
 //        testPanel.draw(window.getWindow());
         window.getWindow().display();
     }
@@ -185,5 +197,6 @@ int main() {
 //        window.clear();
 //        window.display();
 //    }
+    GameWindow::freeTextures();
     return 0;
 }

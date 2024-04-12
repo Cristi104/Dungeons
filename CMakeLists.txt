@@ -104,33 +104,48 @@ endif()
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
-        src/main.cpp
+        main.cpp
         generated/src/Helper.cpp
         env_fixes.h
-        include/window.h
-        src/window.cpp
-        include/Panel.h
-        src/Panel.cpp
-        include/Entity.h
-        src/Entity.cpp
-        include/Settings.h
-        include/FightScreen.h
-        src/FightScreen.cpp
-        src/Settings.cpp
-        include/EffectType.h
-        include/Positions.h
-        include/StatusEffect.h
-        src/StatusEffect.cpp
-        include/Move.h
-        src/Move.cpp
-        include/Stats.h
-        src/Stats.cpp
-        include/Component.h
-        src/Component.cpp
-        include/Label.h
-        src/Label.cpp
-        src/Button.cpp
-        include/Button.h
+        include/Graphics/window.h
+        src/Graphics/window.cpp
+        include/UserInterface/Panel.h
+        src/UserInterface/Panel.cpp
+        include/Entity/Entity.h
+        src/Entity/Entity.cpp
+        include/Graphics/Settings.h
+        include/Graphics/FightScreen.h
+        src/Graphics/FightScreen.cpp
+        src/Graphics/Settings.cpp
+        include/Entity/EffectType.h
+        include/Entity/Positions.h
+        include/Entity/StatusEffect.h
+        src/Entity/StatusEffect.cpp
+        include/Entity/Move.h
+        src/Entity/Move.cpp
+        include/Entity/Stats.h
+        src/Entity/Stats.cpp
+        include/UserInterface/Component.h
+        src/UserInterface/Component.cpp
+        include/UserInterface/Label.h
+        src/UserInterface/Label.cpp
+        src/UserInterface/Button.cpp
+        include/UserInterface/Button.h
+        src/Graphics/MissingTexture.cpp
+        include/Graphics/MissingTexture.h
+        src/UserInterface/Border.cpp
+        include/UserInterface/Border.h
+        src/Map/Biome.cpp
+        include/Map/Biome.h
+        src/Map/Room.cpp
+        include/Map/Room.h
+        src/Map/Road.cpp
+        include/Map/Road.h
+        include/Map/MapEvent.h
+        src/Map/BadMapGeneration.cpp
+        include/Map/BadMapGeneration.h
+        src/Map/Map.cpp
+        include/Map/Map.h
 )
 
 ###############################################################################
