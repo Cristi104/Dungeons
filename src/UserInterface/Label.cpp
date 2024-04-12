@@ -1,4 +1,4 @@
-#include "../include/Label.h"
+#include "../../include/UserInterface/Label.h"
 #include <cstring>
 #include <iostream>
 
@@ -39,13 +39,13 @@ void Label::initFont() {
 Label::Label() {
     this->text.setFont(Label::font);
     this->text.setCharacterSize(12);
-    this->setPriority(2);
+    this->setPriority(3);
 }
 
 Label::Label(const std::string& text, int maxLength) {
     this->text.setFont(Label::font);
     this->text.setCharacterSize(12);
-    this->setPriority(2);
+    this->setPriority(3);
     this->setText(text, maxLength);
 }
 

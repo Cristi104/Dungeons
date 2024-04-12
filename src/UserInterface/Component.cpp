@@ -1,7 +1,7 @@
-#include "../include/Component.h"
+#include "../../include/UserInterface/Component.h"
 
 Component::Component() {
-    this->priority = 0;
+    this->priority = 1;
 }
 
 sf::RectangleShape &Component::getRectangleShape() {
