@@ -1,4 +1,4 @@
-#include "../include/Stats.h"
+#include "../../include/Entity/Stats.h"
 
 std::ostream& operator<<(std::ostream& out, const Stats& stats) {
     out << stats.speed << ' ' << stats.accuracy << ' ' << stats.stun << ' ' << stats.bleed << ' ' << stats.burn << ' ';

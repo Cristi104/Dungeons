@@ -1,4 +1,4 @@
-#include "../include/StatusEffect.h"
+#include "../../include/Entity/StatusEffect.h"
 
 StatusEffect::StatusEffect() {
     this->type = static_cast<EffectType>(0);

@@ -1,4 +1,4 @@
-#include "../include/Move.h"
+#include "../../include/Entity/Move.h"
 
 Move::Move() {
     this->name = "None";

@@ -2,8 +2,8 @@
 #define OOP_MOVE_H
 
 #include <string>
-#include "../include/Positions.h"
-#include "../include/StatusEffect.h"
+#include "Positions.h"
+#include "StatusEffect.h"
 
 class Move {
 private:
@@ -15,18 +15,34 @@ private:
     StatusEffect statusEffect;
     bool aoe;
 public:
+
+    /// creates a basic place holder move
     Move();
+
     Move(const Move& move);
+
     Move& operator=(const Move& move);
+
     ~Move() = default;
+
+    /// serializes the move data
     friend std::ostream& operator<<(std::ostream& out, const Move& move);
+
+    /// deserializes the move data
     friend std::istream& operator>>(std::istream& in, Move& move);
+
     [[nodiscard]] const std::string &getName() const;
+
     [[nodiscard]] Positions getCastPosition() const;
+
     [[nodiscard]] Positions getRange() const;
+
     [[nodiscard]] int getAccuracy() const;
+
     [[nodiscard]] int getDamage() const;
+
     [[nodiscard]] const StatusEffect &getStatusEffect() const;
+
     [[nodiscard]] bool isAoe() const;
 };
 

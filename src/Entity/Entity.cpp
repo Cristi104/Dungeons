@@ -1,4 +1,4 @@
-#include "../include/Entity.h"
+#include "../../include/Entity/Entity.h"
 #include <random>
 
 Entity::Entity() {

@@ -5,7 +5,7 @@
 #include <string>
 #include <ostream>
 #include <istream>
-#include "Settings.h"
+#include "../Graphics/Settings.h"
 #include "EffectType.h"
 #include "Positions.h"
 #include "Stats.h"
