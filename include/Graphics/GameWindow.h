@@ -1,8 +1,9 @@
-#ifndef OOP_WINDOW_H
-#define OOP_WINDOW_H
+#ifndef OOP_GAMEWINDOW_H
+#define OOP_GAMEWINDOW_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include "Settings.h"
 //#include <SFML/Graphics/RectangleShape.hpp>
 
 #include <map>
@@ -21,7 +22,9 @@ public:
     /// @param name name of window
     /// @param x width of window
     /// @param y height of window
-    GameWindow(const std::string& name, int x, int y);
+    explicit GameWindow(const std::string& name,
+                        int x = Settings::getSingleton()->getResolutionWidth(),
+                        int y = Settings::getSingleton()->getResolutionHeight());
 
     /// @param path path to the folder from witch to load textures
     ~GameWindow();
@@ -41,4 +44,4 @@ public:
 
 };
 
-#endif //OOP_WINDOW_H
+#endif //OOP_GAMEWINDOW_H

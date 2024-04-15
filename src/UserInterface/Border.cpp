@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics/Sprite.hpp>
 #include "../../include/UserInterface/Border.h"
-#include "../../include/Graphics/window.h"
+#include "../../include/Graphics/GameWindow.h"
 
 Border::Border() {
     sf::IntRect rect(0,0,128,128);

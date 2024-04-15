@@ -1,4 +1,4 @@
-#include "../../include/Graphics/window.h"
+#include "../../include/Graphics/GameWindow.h"
 #include <filesystem>
 #include <iostream>
 #include "../../include/Graphics/MissingTexture.h"
