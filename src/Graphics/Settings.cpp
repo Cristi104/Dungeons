@@ -16,7 +16,7 @@ Settings::Settings() {
     this->resolutionHeight = (int)sf::VideoMode::getDesktopMode().height;
     this->resolutionWidth = (int)sf::VideoMode::getDesktopMode().width;
     this->scaleWidth = (float)Settings::resolutionWidth / 1280.0f;
-    this->scaleHeight = (float)Settings::resolutionWidth / 720.0f;
+    this->scaleHeight = (float)Settings::resolutionHeight / 720.0f;
 }
 
 int Settings::getResolutionWidth() const {
