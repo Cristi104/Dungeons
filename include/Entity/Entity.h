@@ -23,18 +23,41 @@ private:
     Positions position;
     std::vector<StatusEffect> statusEffects;
     Move* moves;
+
 public:
+
     Entity();
+
     Entity(const Entity& entity);
+
     Entity& operator=(const Entity& entity);
+
     ~Entity();
+
     sf::RectangleShape& getRectangleShape();
+
+    const Stats &getStats() const;
+
+    Move *getMoves() const;
+
+    /// serializes the entity object
     friend std::ostream& operator<<(std::ostream& out, const Entity& entity);
+
+    /// deserializes the entity object
     friend std::istream& operator>>(std::istream& in, Entity& entity);
+
+    /// adds a StatusEffect object to the entity
     void applyStatusEffect(const StatusEffect& statusEffect);
+
+    /// removes a StatusEffect form the entity
     void removeStatusEffect(int index);
+
+    /// applies the effect of a move on the entity
     void getHit(const Move& move);
+
+    /// decrements and deletes the StatusEffects applied to the entity every turn
     void turn();
+
     Positions getPosition() const;
 };
 

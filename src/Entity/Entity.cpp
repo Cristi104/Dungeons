@@ -1,5 +1,6 @@
 #include "../../include/Entity/Entity.h"
 #include <random>
+#include "../../include/Graphics/GameWindow.h"
 
 Entity::Entity() {
     this->moves = new Move[4];
@@ -7,8 +8,11 @@ Entity::Entity() {
     this->textureName = "None";
     this->health = 0;
     this->maxHealth = 0;
-    this->position = static_cast<Positions>(0);
+    this->position = static_cast<Positions>(1);
     this->statusEffects.resize(0);
+    this->sprite.setSize({120 * Settings::getInstance()->getScaleWidth(),
+                          200 * Settings::getInstance()->getScaleHeight()});
+    this->sprite.setTexture(GameWindow::getTexture(this->textureName));
 }
 
 Entity::Entity(const Entity &entity) {
@@ -112,4 +116,12 @@ void Entity::turn() {
 
 Positions Entity::getPosition() const {
     return position;
+}
+
+const Stats &Entity::getStats() const {
+    return stats;
+}
+
+Move *Entity::getMoves() const {
+    return moves;
 }
