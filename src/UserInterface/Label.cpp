@@ -2,12 +2,11 @@
 #include <cstring>
 #include <iostream>
 
-sf::Font Label::font;
-
 void Label::setText(const std::string &string, const int maxLength) {
     char* copy = new char[string.size() + 1];
     strcpy(copy, string.c_str());
-    char* splitText = new char[string.size() + 1];
+    char* splitText = new char[string.size() + 2];
+    splitText[0] = '\0';
     char* p = strtok(copy, " ");
     int size = 0;
     while(p){
@@ -31,25 +30,31 @@ void Label::setText(const std::string &string, const int maxLength) {
     delete[] copy;
 }
 
-void Label::initFont() {
-    if (!Label::font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf"))
+Label::Label(int fontSize, int priority) : Component(priority){
+    if (!this->font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf"))
         std::cout << "Failed to load font.\n";
+    this->text.setFont(this->font);
+    this->text.setCharacterSize(fontSize);
 }
 
-Label::Label() {
-    this->text.setFont(Label::font);
-    this->text.setCharacterSize(12);
-    this->setPriority(3);
-}
-
-Label::Label(const std::string& text, int maxLength) {
-    this->text.setFont(Label::font);
-    this->text.setCharacterSize(12);
-    this->setPriority(3);
+Label::Label(const std::string& text, int fontSize, int maxLength, int priority) : Component(priority){
+    if (!this->font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf"))
+        std::cout << "Failed to load font.\n";
+    this->text.setFont(this->font);
+    this->text.setCharacterSize(fontSize);
     this->setText(text, maxLength);
 }
 
 void Label::draw(sf::RenderWindow &window) {
     window.draw(this->getRectangleShape());
     window.draw(this->text);
+}
+
+void Label::addPosition(sf::Vector2f position) {
+    Component::addPosition(position);
+    this->text.setPosition(this->text.getPosition() + position);
+}
+
+void Label::setFormatedText(const std::string &string) {
+    this->text.setString(string);
 }
