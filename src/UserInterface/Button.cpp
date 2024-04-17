@@ -1,7 +1,6 @@
 #include "../../include/UserInterface/Button.h"
 
-Button::Button() {
-    this->setPriority(5);
+Button::Button(int priority) : Component(priority) {
     this->boundingBox = sf::IntRect(0,0,50,50);
     this->wasPressed = false;
 }
@@ -37,4 +36,11 @@ bool Button::handleEvent(const sf::Event &event) {
         }
     }
     return false;
+}
+
+void Button::addPosition(sf::Vector2f position) {
+    Component::addPosition(position);
+    this->icon.setPosition(this->icon.getPosition() + position);
+    this->boundingBox.left += (int)position.x;
+    this->boundingBox.top += (int)position.y;
 }

@@ -3,22 +3,24 @@
 
 #include "Component.h"
 #include "SFML/Window/Event.hpp"
+#include "EventHandler.h"
 
-class Button : public Component {
+class Button : public Component , public EventHandler{
 private:
-    sf::IntRect boundingBox;
     sf::RectangleShape icon;
     bool wasPressed;
+
+protected:
+    sf::IntRect boundingBox;
+
 public:
 
     /// creates a 50x50 button with priority 5
-    Button();
+    explicit Button(int priority = 5);
 
     ~Button() override = default;
 
-    /// event handler send events to this so that they will be processed
-    /// @return true if the event was used in any way
-    bool handleEvent(const sf::Event& event);
+    bool handleEvent(const sf::Event& event) override;
 
     /// @return true for every frame in which the button was pressed
     bool isPressed();
@@ -31,6 +33,8 @@ public:
     /// draws the Button
     /// @param window draw target
     void draw(sf::RenderWindow& window) override;
+
+    void addPosition(sf::Vector2f position) override;
 };
 
 
