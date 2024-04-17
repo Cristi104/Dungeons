@@ -20,6 +20,6 @@ public:
 
     [[nodiscard]] float getScaleHeight() const;
 
-    static Settings *getSingleton();
+    static Settings *getInstance();
 };
 #endif //OOP_SETTINGS_H

@@ -4,8 +4,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "Settings.h"
-//#include <SFML/Graphics/RectangleShape.hpp>
-
 #include <map>
 
 class GameWindow {
@@ -23,8 +21,8 @@ public:
     /// @param x width of window
     /// @param y height of window
     explicit GameWindow(const std::string& name,
-                        int x = Settings::getSingleton()->getResolutionWidth(),
-                        int y = Settings::getSingleton()->getResolutionHeight());
+                        int x = Settings::getInstance()->getResolutionWidth(),
+                        int y = Settings::getInstance()->getResolutionHeight());
 
     /// @param path path to the folder from witch to load textures
     ~GameWindow();
@@ -41,7 +39,6 @@ public:
 
     /// @return a reference to the drawing window
     sf::RenderWindow& getWindow();
-
 };
 
 #endif //OOP_GAMEWINDOW_H

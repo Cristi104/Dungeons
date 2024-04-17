@@ -107,15 +107,15 @@ add_executable(${PROJECT_NAME}
         main.cpp
         generated/src/Helper.cpp
         env_fixes.h
-        include/Graphics/window.h
-        src/Graphics/window.cpp
+        include/Graphics/GameWindow.h
+        src/Graphics/GameWindow.cpp
         include/UserInterface/Panel.h
         src/UserInterface/Panel.cpp
         include/Entity/Entity.h
         src/Entity/Entity.cpp
         include/Graphics/Settings.h
-        include/Graphics/FightScreen.h
-        src/Graphics/FightScreen.cpp
+        include/UserInterface/FightScreen.h
+        src/UserInterface/FightScreen.cpp
         src/Graphics/Settings.cpp
         include/Entity/EffectType.h
         include/Entity/Positions.h
@@ -146,6 +146,14 @@ add_executable(${PROJECT_NAME}
         include/Map/BadMapGeneration.h
         src/Map/Map.cpp
         include/Map/Map.h
+        src/Game.cpp
+        include/Game.h
+        src/UserInterface/PopupPanel.cpp
+        include/UserInterface/PopupPanel.h
+        include/UserInterface/EventHandler.h
+        include/UserInterface/Drawn.h
+        src/UserInterface/MovePopup.cpp
+        include/UserInterface/MovePopup.h
 )
 
 ###############################################################################

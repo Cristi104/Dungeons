@@ -1,7 +1,6 @@
 #ifndef OOP_BIOME_H
 #define OOP_BIOME_H
 
-
 #include <ostream>
 #include <istream>
 #include <SFML/System/Vector2.hpp>
@@ -16,6 +15,7 @@ private:
     int roadLengthMax;
     int roadEventChance;
     sf::Vector2i size;
+
 public:
 
     /// creates a biome object
@@ -29,16 +29,21 @@ public:
     /// this should be used for custom biome creation
     friend std::istream& operator>>(std::istream& in, Biome& biome);
 
-    int getLengthMin() const;
-    int getLengthMax() const;
-    int getRoomEventChance() const;
-    int getBranchingChance() const;
-    int getRoadLengthMin() const;
-    int getRoadLengthMax() const;
-    int getRoadEventChance() const;
-    const sf::Vector2i& getSize() const;
+    [[nodiscard]] int getLengthMin() const;
 
+    [[nodiscard]] int getLengthMax() const;
+
+    [[nodiscard]] int getRoomEventChance() const;
+
+    [[nodiscard]] int getBranchingChance() const;
+
+    [[nodiscard]] int getRoadLengthMin() const;
+
+    [[nodiscard]] int getRoadLengthMax() const;
+
+    [[nodiscard]] int getRoadEventChance() const;
+
+    [[nodiscard]] const sf::Vector2i& getSize() const;
 };
-
 
 #endif //OOP_BIOME_H

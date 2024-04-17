@@ -5,7 +5,9 @@
 
 class BadMapGeneration : public std::runtime_error{
 public:
+
     explicit BadMapGeneration(const std::string& message);
+
     [[nodiscard]] const char* what() const noexcept override;
 };
 

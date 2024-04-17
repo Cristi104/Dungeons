@@ -8,7 +8,7 @@ Biome::Biome() {
     this->roadLengthMin = 3;
     this->roadLengthMax = 6;
     this->roadEventChance = 20;
-    this->size = sf::Vector2i(5,5);
+    this->size = sf::Vector2i(11,5);
 }
 
 int Biome::getLengthMin() const {

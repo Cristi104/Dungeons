@@ -7,8 +7,8 @@
 class Room {
 private:
     MapEvent event;
-public:
 
+public:
 
     /// creates a room according to default biome settings
     /// @param biome template biome

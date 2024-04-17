@@ -8,22 +8,6 @@
 #include "Biome.h"
 #include "../UserInterface/Panel.h"
 
-//class Map {
-//private:
-//    Room* startRoom;
-//    sf::RenderTexture texture;
-//    sf::RectangleShape sprite;
-//    Panel panel;
-//    static Room* extend(const Biome& biome, Room* room, int length = 1);
-////    static void searchSize(Room* room, int currentX, int currentY, sf::IntRect& rect);
-//public:
-//    explicit Map(const Biome& biome = Biome());
-//
-//    void draw(sf::RenderWindow& window);
-//
-//    Room* getStartRoom() const;
-//};
-
 class Map{
 private:
     struct nod{
@@ -33,11 +17,17 @@ private:
     sf::Vector2i size;
     sf::RenderTexture texture;
     sf::RectangleShape sprite;
+
     sf::Vector2i extend(const Biome& biome, sf::Vector2i position, int length = 1);
+
 public:
+
+    /// creates a Map object based on a biome
     explicit Map(const Biome& biome = Biome());
 
     ~Map();
+
+    const sf::RenderTexture &getTexture() const;
 
     sf::RectangleShape &getSprite();
 };

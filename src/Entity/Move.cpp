@@ -61,3 +61,11 @@ const StatusEffect& Move::getStatusEffect() const {
 bool Move::isAoe() const {
     return aoe;
 }
+
+void Move::setRange(Positions positions) {
+    this->range = positions;
+}
+
+void Move::setCastPosition(Positions positions) {
+    this->castPosition = positions;
+}

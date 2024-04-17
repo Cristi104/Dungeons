@@ -5,9 +5,9 @@
 
 Map::Map(const Biome &biome) {
     this->size = biome.getSize();
-    this->map = new nod*[this->size.y];
-    for(int i = 0; i < this->size.y; i++)
-        this->map[i] = new nod[this->size.x];
+    this->map = new nod*[this->size.x];
+    for(int i = 0; i < this->size.x; i++)
+        this->map[i] = new nod[this->size.y];
     std::random_device device;
     std::mt19937 gen(device());
     std::uniform_int_distribution<> random(1,100);
@@ -27,7 +27,7 @@ Map::Map(const Biome &biome) {
     this->texture.create(
             this->size.x * 32 + (this->size.x - 1) * 8 * biome.getRoadLengthMax() + 32,
             this->size.y * 32 + (this->size.y - 1) * 8 * biome.getRoadLengthMax() + 32);
-    this->texture.clear(sf::Color(11,16,0));
+    this->texture.clear(sf::Color(11,16,22));
 
     sf::RectangleShape roomHelperSprite;
     roomHelperSprite.setTexture(GameWindow::getTexture("Room"));
@@ -42,24 +42,24 @@ Map::Map(const Biome &biome) {
     roadHelperSpriteHorizontal.setTextureRect(sf::IntRect(0,0,biome.getRoadLengthMax()*4,4));
     roadHelperSpriteHorizontal.setSize(sf::Vector2f((float)(8 * biome.getRoadLengthMax()), 8));
 
-    for(int i = 0; i < this->size.y; i++){
-        for(int j = 0; j < this->size.x; j++){
+    for(int i = 0; i < this->size.x; i++){
+        for(int j = 0; j < this->size.y; j++){
             if(map[i][j].room){
                 roomHelperSprite.setPosition(
-                        (float)(j * (32 + 8 * biome.getRoadLengthMax()) + 16),
-                        (float)(i * (32 + 8 * biome.getRoadLengthMax()) + 16));
+                        (float)(i * (32 + 8 * biome.getRoadLengthMax()) + 16),
+                        (float)(j * (32 + 8 * biome.getRoadLengthMax()) + 16));
                 this->texture.draw(roomHelperSprite);
             }
-            if(map[i][j].roads[0]){
+            if(map[i][j].roads[1]){
                 roadHelperSpriteVertical.setPosition(
-                        (float)(j * (32 + 8 * biome.getRoadLengthMax()) + 36),
-                        (float)(i * (32 + 8 * biome.getRoadLengthMax()) + 16 - 8 * biome.getRoadLengthMax()));
+                        (float)(i * (32 + 8 * biome.getRoadLengthMax()) + 36),
+                        (float)((j + 1) * (32 + 8 * biome.getRoadLengthMax()) + 16 - 8 * biome.getRoadLengthMax()));
                 this->texture.draw(roadHelperSpriteVertical);
             }
-            if(map[i][j].roads[1]){
+            if(map[i][j].roads[0]){
                 roadHelperSpriteHorizontal.setPosition(
-                        (float)(j * (32 + 8 * biome.getRoadLengthMax()) + 48),
-                        (float)(i * (32 + 8 * biome.getRoadLengthMax()) + 28));
+                        (float)((i - 1) * (32 + 8 * biome.getRoadLengthMax()) + 48),
+                        (float)(j * (32 + 8 * biome.getRoadLengthMax()) + 28));
                 this->texture.draw(roadHelperSpriteHorizontal);
             }
         }
@@ -124,4 +124,8 @@ Map::~Map() {
         delete[] this->map[i];
     }
     delete[] this->map;
+}
+
+const sf::RenderTexture &Map::getTexture() const {
+    return texture;
 }

@@ -14,6 +14,7 @@ private:
     int damage;
     StatusEffect statusEffect;
     bool aoe;
+
 public:
 
     /// creates a basic place holder move
@@ -35,7 +36,11 @@ public:
 
     [[nodiscard]] Positions getCastPosition() const;
 
+    void setCastPosition(Positions positions);
+
     [[nodiscard]] Positions getRange() const;
+
+    void setRange(Positions positions);
 
     [[nodiscard]] int getAccuracy() const;
 

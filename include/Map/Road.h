@@ -10,6 +10,7 @@ private:
     int currentLengthPassed;
     int eventChance;
     bool hasBeenPassed;
+
 public:
 
     /// creates a road according to default biome settings
@@ -20,7 +21,7 @@ public:
     /// @return MapEvent of each passed cell
     MapEvent pass();
 
-    bool getHasBeenPassed() const;
+    [[nodiscard]] bool getHasBeenPassed() const;
 };
 
 

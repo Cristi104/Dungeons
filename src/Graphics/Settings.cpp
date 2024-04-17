@@ -35,7 +35,7 @@ float Settings::getScaleHeight() const {
     return scaleHeight;
 }
 
-Settings *Settings::getSingleton() {
+Settings *Settings::getInstance() {
     if(Settings::singleton == nullptr)
         Settings::singleton = new Settings;
     return Settings::singleton;
