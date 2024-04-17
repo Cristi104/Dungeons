@@ -8,36 +8,46 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "../Graphics/window.h"
+#include "../Graphics/GameWindow.h"
 #include "Component.h"
 #include "Button.h"
 #include "Label.h"
 
-class Panel {
-private:
+class Panel : public EventHandler , public Drawn{
+protected:
+    bool visible;
     std::vector<Component*> components;
-    bool isShown;
+
 public:
 
     Panel();
 
-    ~Panel();
+    virtual ~Panel();
 
-    /// event handler send events to this so that they will be processed
-    /// @return true if the event was used in any way
-    bool handleEvent(const sf::Event& event);
+    Panel(const Panel& panel) = delete;
 
-    /// draws the Panel
+    Panel& operator=(const Panel& panel) = delete;
+
+    bool handleEvent(const sf::Event& event) override;
+
+    /// draws the Panel. Components are drawn in order of the priority attribute from
+    /// 0 - first drawn, behind everything else to
+    /// 5 - last drawn, on top of everything else
     /// @param window draw target
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window) override;
+
+    void addPosition(sf::Vector2f position) override;
 
     /// adds a component to the panel
     /// @return index of the component;
     int addComponent(Component* component);
 
-    /// toggles between hidden and shown
+    /// toggles between hidden and visible
     void toggleVisibility();
 
     Component* getComponent(int index);
+
+    [[nodiscard]] bool isVisible() const;
 };
+
 #endif //OOP_PANEL_H

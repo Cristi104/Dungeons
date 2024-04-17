@@ -1,7 +1,7 @@
 #include "../../include/UserInterface/Component.h"
 
-Component::Component() {
-    this->priority = 1;
+Component::Component(int priority) {
+    this->priority = priority;
 }
 
 sf::RectangleShape &Component::getRectangleShape() {
@@ -18,4 +18,8 @@ void Component::setPriority(int value) {
 
 int Component::getPriority() const {
     return priority;
+}
+
+void Component::addPosition(sf::Vector2f position) {
+    this->sprite.setPosition(this->sprite.getPosition() + position);
 }

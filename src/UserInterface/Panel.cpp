@@ -3,11 +3,11 @@
 #include "../../include/UserInterface/Panel.h"
 
 Panel::Panel() {
-    this->isShown = false;
+    this->visible = false;
 }
 
 void Panel::draw(sf::RenderWindow &window) {
-    if(!this->isShown)
+    if(!this->visible)
         return;
     for(int i = 0; i <= 6; i++) {
         for (Component* component: this->components) {
@@ -23,14 +23,14 @@ int Panel::addComponent(Component* component) {
 }
 
 void Panel::toggleVisibility() {
-    this->isShown ^= true;
+    this->visible ^= true;
 }
 
 Component* Panel::getComponent(int index) {
     try{
         return this->components.at(index);
     }catch(std::out_of_range&){
-        std::cout << "Failed to get component, index out of range\n";
+        std::cout << "Failed to getInstance component, index out of range\n";
         return this->components[0];
     }
 }
@@ -42,13 +42,25 @@ Panel::~Panel() {
 }
 
 bool Panel::handleEvent(const sf::Event &event) {
-    if(!this->isShown)
+    if(!this->visible)
         return false;
     for(Component* p : this->components){
-        try{
-            if(dynamic_cast<Button*>(p)->handleEvent(event))
-                return true;
-        }catch(std::bad_cast&){}
+        EventHandler* handler = dynamic_cast<Button*>(p);
+        if(!handler)
+            continue;
+        if(handler->handleEvent(event))
+            return true;
     }
     return false;
 }
+
+bool Panel::isVisible() const {
+    return visible;
+}
+
+void Panel::addPosition(sf::Vector2f position) {
+    for(Component* p : this->components){
+        p->addPosition(position);
+    }
+}
+
