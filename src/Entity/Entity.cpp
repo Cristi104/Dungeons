@@ -92,12 +92,11 @@ void Entity::getHit(const Move& move) {
     std::mt19937 gen(device());
     std::uniform_int_distribution<> random(1,100);
     if(random(gen) - move.getAccuracy() <= 0) {
-        int statusEffectChance = move.getStatusEffect().getChance()
-                - this->stats.getValue(move.getStatusEffect().getType());
+        int statusEffectChance = move.getStatusEffect().getChance() - this->stats.getValue(move.getStatusEffect().getType());
         if(random(gen) - statusEffectChance <= 0){
             this->applyStatusEffect(move.getStatusEffect());
         }
-        this->health = (this->health + move.getDamage() < this->maxHealth)? this->health + move.getDamage() : this->maxHealth;
+        this->health = (this->health - move.getDamage() < this->maxHealth)? this->health - move.getDamage() : this->maxHealth;
     }
 }
 
@@ -124,4 +123,79 @@ const Stats &Entity::getStats() const {
 
 Move *Entity::getMoves() const {
     return moves;
+}
+
+Entity::Entity(int id) {
+    this->moves = new Move[4];
+    this->sprite.setSize({120 * Settings::getInstance()->getScaleWidth(),
+                          200 * Settings::getInstance()->getScaleHeight()});
+    this->position = static_cast<Positions>(1);
+    switch (id) {
+        case 0://knight
+            this->health = 18;
+            this->maxHealth = 20;
+            this->moves[0] = Move("Shield Bash",
+                                  static_cast<Positions>(Positions::FRONTALLY2),
+                                  static_cast<Positions>(Positions::FRONTENEMY1 | Positions::FRONTENEMY2),
+                                  95, 4, StatusEffect(EffectType::STUN, 1, 50, 0));
+            this->moves[1] = Move("Holy Lance",
+                                  static_cast<Positions>(Positions::BACKALLY2 | Positions::BACKALLY1),
+                                  static_cast<Positions>(Positions::FRONTENEMY1 | Positions::FRONTENEMY2 | Positions::BACKENEMY1),
+                                  85, 9);
+            this->moves[2] = Move("Stab",
+                                  static_cast<Positions>(Positions::FRONTALLY2 | Positions::FRONTALLY1),
+                                  static_cast<Positions>(Positions::FRONTENEMY1 | Positions::FRONTENEMY2),
+                                  90, 7);
+            this->moves[3] = Move("Bandage Wounds",
+                                  static_cast<Positions>(Positions::FRONTALLY2),
+                                  static_cast<Positions>(Positions::FRONTALLY2),
+                                  200, -4);
+            this->textureName = "Knight";
+            this->name = "Knight";
+            this->stats = Stats(3,100,50,80,10);
+            this->sprite.setTexture(GameWindow::getTexture(textureName));
+            break;
+        case 1://rogue
+            this->health = 15;
+            this->maxHealth = 15;
+            this->moves[0] = Move("Shield Bash",
+                                  static_cast<Positions>(Positions::FRONTALLY2),
+                                  static_cast<Positions>(Positions::FRONTENEMY1 | Positions::FRONTENEMY2),
+                                  95, 4, StatusEffect(EffectType::STUN, 1, 50));
+            this->moves[1] = Move("Holy Lance",
+                                  static_cast<Positions>(Positions::BACKALLY2 | Positions::BACKALLY1),
+                                  static_cast<Positions>(Positions::FRONTENEMY1 | Positions::FRONTENEMY2 | Positions::BACKENEMY1),
+                                  85, 9);
+            this->moves[2] = Move("Stab",
+                                  static_cast<Positions>(Positions::FRONTALLY2 | Positions::FRONTALLY1),
+                                  static_cast<Positions>(Positions::FRONTENEMY1 | Positions::FRONTENEMY2),
+                                  90, 7);
+            this->moves[3] = Move("Bandage Wounds",
+                                  static_cast<Positions>(Positions::FRONTALLY2),
+                                  static_cast<Positions>(Positions::FRONTALLY2),
+                                  200, -4);
+            this->textureName = "Rogue";
+            this->name = "Rogue";
+            this->stats = Stats(7,100,30,40,20);
+            this->sprite.setTexture(GameWindow::getTexture(textureName));
+            break;
+        default:
+            throw(std::out_of_range("entity id out of range.\n"));
+    }
+}
+
+int Entity::getHealth() const {
+    return health;
+}
+
+int Entity::getMaxHealth() const {
+    return maxHealth;
+}
+
+const std::string &Entity::getName() const {
+    return name;
+}
+
+const std::string &Entity::getTextureName() const {
+    return textureName;
 }

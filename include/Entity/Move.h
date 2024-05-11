@@ -20,6 +20,9 @@ public:
     /// creates a basic place holder move
     Move();
 
+    Move(const std::string &name, Positions castPosition, Positions range, int accuracy, int damage,
+         const StatusEffect &statusEffect = StatusEffect(), bool aoe = false);
+
     Move(const Move& move);
 
     Move& operator=(const Move& move);

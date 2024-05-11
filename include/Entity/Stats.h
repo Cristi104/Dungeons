@@ -17,6 +17,8 @@ public:
     /// creates a basic stats object
     Stats() = default;
 
+    Stats(int speed, int accuracy, int stun, int bleed, int burn);
+
     Stats& operator=(const Stats& stats);
 
     ~Stats() = default;

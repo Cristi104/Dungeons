@@ -17,11 +17,11 @@ public:
     StatusEffect();
 
     /// creates a completely defined status effect
-    /// @param value amount of healing/damage/deBuff
-    /// @param chance percent chance that the effect is applied
-    /// @param duration number of turns the entity has this effect
     /// @param type the type of effect
-    StatusEffect(EffectType type, int value, int duration, int chance);
+    /// @param duration number of turns the entity has this effect
+    /// @param chance percent chance that the effect is applied
+    /// @param value amount of healing/damage/deBuff
+    StatusEffect(EffectType type, int duration, int chance, int value = 0);
 
     StatusEffect(const StatusEffect& statusEffect);
 

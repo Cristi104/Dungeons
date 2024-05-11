@@ -28,6 +28,10 @@ public:
 
     Entity();
 
+    /// creates a entity corresponding to the internal id info
+    /// @param id id of the entity;
+    explicit Entity(int id);
+
     Entity(const Entity& entity);
 
     Entity& operator=(const Entity& entity);
@@ -39,6 +43,14 @@ public:
     const Stats &getStats() const;
 
     Move *getMoves() const;
+
+    int getHealth() const;
+
+    int getMaxHealth() const;
+
+    const std::string &getName() const;
+
+    const std::string &getTextureName() const;
 
     /// serializes the entity object
     friend std::ostream& operator<<(std::ostream& out, const Entity& entity);

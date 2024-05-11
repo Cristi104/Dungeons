@@ -7,7 +7,7 @@ StatusEffect::StatusEffect() {
     this->chance = 0;
 }
 
-StatusEffect::StatusEffect(EffectType type, int value, int duration, int chance) {
+StatusEffect::StatusEffect(EffectType type, int duration, int chance, int value) {
     this->type = type;
     this->value = value;
     this->duration = duration;

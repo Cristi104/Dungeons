@@ -38,3 +38,6 @@ void Stats::setValue(EffectType type, int value) {
         default:return;
     }
 }
+
+Stats::Stats(int speed, int accuracy, int stun, int bleed, int burn) : speed(speed), accuracy(accuracy), stun(stun),
+                                                                       bleed(bleed), burn(burn) {}

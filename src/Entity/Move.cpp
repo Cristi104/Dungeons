@@ -69,3 +69,8 @@ void Move::setRange(Positions positions) {
 void Move::setCastPosition(Positions positions) {
     this->castPosition = positions;
 }
+
+Move::Move(const std::string &name, Positions castPosition, Positions range, int accuracy, int damage,
+           const StatusEffect &statusEffect, bool aoe) : name(name), castPosition(castPosition), range(range),
+                                                         accuracy(accuracy), damage(damage), statusEffect(statusEffect),
+                                                         aoe(aoe) {}
