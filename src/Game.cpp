@@ -8,8 +8,14 @@ Game::Game() {
 }
 
 int Game::start() {
-    FightScreen::getInstance()->addEntity(new Entity());
+    FightScreen::getInstance()->addEntity(new Entity(0));
+    FightScreen::getInstance()->swapEntities(0,3);
     FightScreen::getInstance()->turn();
+//    sf::View testView;
+
+//    testView.reset({0,0,1200,700});
+//    testView.setViewport({0,0,0.5,1});
+
     while(this->window->getWindow().isOpen() && running){
         sf::Event event{};
         while(this->window->getWindow().pollEvent(event)){
@@ -28,8 +34,9 @@ int Game::start() {
             }
         }
         this->window->getWindow().clear();
+//        window->getWindow().setView(testView);
         FightScreen::getInstance()->draw(this->window->getWindow());
-
+//        window->getWindow().setView(window->getWindow().getDefaultView());
         this->window->getWindow().display();
     }
     GameWindow::freeTextures();

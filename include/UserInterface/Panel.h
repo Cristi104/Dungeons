@@ -18,6 +18,9 @@ protected:
     bool visible;
     std::vector<Component*> components;
 
+protected:
+
+    void addPos(float x, float y) override;
 public:
 
     Panel();
@@ -35,8 +38,6 @@ public:
     /// 5 - last drawn, on top of everything else
     /// @param window draw target
     void draw(sf::RenderWindow& window) override;
-
-    void addPosition(sf::Vector2f position) override;
 
     /// adds a component to the panel
     /// @return index of the component;

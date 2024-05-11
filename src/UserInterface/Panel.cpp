@@ -58,9 +58,9 @@ bool Panel::isVisible() const {
     return visible;
 }
 
-void Panel::addPosition(sf::Vector2f position) {
+void Panel::addPos(float x, float y) {
     for(Component* p : this->components){
-        p->addPosition(position);
+        p->addPosition<sf::Vector2f>({x,y});
     }
 }
 

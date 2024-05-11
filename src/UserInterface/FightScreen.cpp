@@ -5,10 +5,13 @@
 #include "../../include/UserInterface/PopupPanel.h"
 #include "../../include/UserInterface/Border.h"
 #include "../../include/UserInterface/MovePopup.h"
+#include "../../include/UserInterface/MapPanel.h"
+#include "../../include/UserInterface/CharacterPanel.h"
 
 FightScreen* FightScreen::singleton = nullptr;
 
 FightScreen::FightScreen() :Panel() {
+    this->selectedEntity = 3;
     this->selectedMove = 0;
     this->entities = new Entity*[8];
     for(int i = 0; i < 8; i++)
@@ -16,45 +19,16 @@ FightScreen::FightScreen() :Panel() {
     for(int i = 0; i < 8; i++){
         auto* button = new Button;
         sf::Vector2f position = FightScreen::getCoordsOfIndex(i);
-        button->setBoundingBox({(int)position.x,
-                                (int)position.y,
-                                (int)(120 * Settings::getInstance()->getScaleWidth()),
-                                (int)(200 * Settings::getInstance()->getScaleHeight())});
+        button->setBoundingBox({position.x,
+                                position.y,
+                                120 * Settings::getInstance()->getScaleWidth(),
+                                200 * Settings::getInstance()->getScaleHeight()});
         this->addComponent(button);
     }
-    this->characterPanel = new Panel;
-    auto* border = new Border({0,
-                               (int)(440 * Settings::getInstance()->getScaleHeight()),
-                               Settings::getInstance()->getResolutionWidth() / 2,
-                               (int)((720 - 440)* Settings::getInstance()->getScaleHeight())});
-    this->characterPanel->addComponent(border);
-
-    for(int i = 0; i < 6; i++){
-        auto* popup = new MovePopup(new Move);
-        popup->setBoundingBox({0,
-                               0,
-                               (int)(48 * Settings::getInstance()->getScaleWidth()),
-                               (int)(48 * Settings::getInstance()->getScaleHeight()),});
-        popup->getIcon().setTexture(GameWindow::getTexture("Skip"));
-        popup->getIcon().setSize({48 * Settings::getInstance()->getScaleWidth(), 48 * Settings::getInstance()->getScaleHeight()});
-        popup->addPosition({(float)(50 + 49 * i) * Settings::getInstance()->getScaleWidth(), (470 * Settings::getInstance()->getScaleHeight())});
-        this->characterPanel->addComponent(popup);
-    }
-    this->characterPanel->toggleVisibility();
+    this->characterPanel = new CharacterPanel*[4];
+    for(int i = 0; i < 4; i++)this->characterPanel[i] = nullptr;
     this->currentMap = new Map;
-    this->mapPanel = new Panel;
-    border = new Border({Settings::getInstance()->getResolutionWidth() / 2,
-                               (int)(440 * Settings::getInstance()->getScaleHeight()),
-                         Settings::getInstance()->getResolutionWidth() / 2,
-                               (int)((720 - 440)* Settings::getInstance()->getScaleHeight())});
-    this->mapPanel->addComponent(border);
-    auto* map = new Component;
-    map->getRectangleShape().setTexture(&this->currentMap->getTexture().getTexture());
-    map->getRectangleShape().setSize({(((float) Settings::getInstance()->getResolutionWidth() - 128) / 2 ),
-                                      ((720 - 440 - 64)* Settings::getInstance()->getScaleHeight())});
-    map ->getRectangleShape().setPosition(((float) Settings::getInstance()->getResolutionWidth() + 64) / 2,
-                                          ((440 + 32) * Settings::getInstance()->getScaleHeight()));
-    this->mapPanel->addComponent(map);
+    this->mapPanel = new MapPanel(this->currentMap);
     this->mapPanel->toggleVisibility();
     this->toggleVisibility();
 }
@@ -90,6 +64,8 @@ sf::Vector2f FightScreen::getCoordsOfIndex(int index) {
 void FightScreen::addEntity(Entity* entity) {
     int index = FightScreen::getIndex(entity->getPosition());
     this->entities[index] = entity;
+    if(index < 4)
+        this->characterPanel[index] = new CharacterPanel(entity);
     entity->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index));
 }
 
@@ -103,8 +79,15 @@ void FightScreen::swapEntities(int index1, int index2) {
     Entity* p = this->entities[index1];
     this->entities[index1] = this->entities[index2];
     this->entities[index2] = p;
-    entities[index1]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index1));
-    entities[index2]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index2));
+    if(index1 < 4 && index2 < 4){
+        auto* aux = this->characterPanel[index2];
+        this->characterPanel[index2] = this->characterPanel[index1];
+        this->characterPanel[index1] = aux;
+    }
+    if(this->entities[index1])
+        this->entities[index1]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index1));
+    if(this->entities[index2])
+        this->entities[index2]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index2));
 }
 
 void FightScreen::deleteEntity(Positions position) {
@@ -126,11 +109,14 @@ void FightScreen::deleteEntity(int index) {
 
 void FightScreen::draw(sf::RenderWindow &window) {
     for(int i = 0; i < 8; i++)
-        if(entities[i] != nullptr)
-//            window.draw(entities[i]->getRectangleShape());
+        if(entities[i] != nullptr){
+            entities[i]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(i));
+            window.draw(entities[i]->getRectangleShape());
+        }
     Panel::draw(window);
-    this->characterPanel->draw(window);
     this->mapPanel->draw(window);
+    if(this->characterPanel[this->selectedEntity])
+        this->characterPanel[this->selectedEntity]->draw(window);
 }
 
 FightScreen *FightScreen::getInstance() {
@@ -140,8 +126,9 @@ FightScreen *FightScreen::getInstance() {
 }
 
 bool FightScreen::handleEvent(const sf::Event &event) {
-    if(this->characterPanel->handleEvent(event))
-        return true;
+    if(this->characterPanel[this->selectedEntity])
+        if(this->characterPanel[this->selectedEntity]->handleEvent(event))
+            return true;
     if(this->mapPanel->handleEvent(event))
         return true;
     if(!this->visible)
@@ -243,10 +230,13 @@ void FightScreen::turn() {
 }
 
 void FightScreen::endEntityTurn() {
-    turnOrder.pop();
+    this->turnOrder.pop();
     this->selectedMove = 0;
     this->turn();
     this->entities[turnOrder.top()]->turn();
+    if(this->turnOrder.top() < 4){
+        this->characterPanel[turnOrder.top()]->update();
+    }
 //    std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 

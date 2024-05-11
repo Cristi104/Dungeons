@@ -6,6 +6,7 @@
 #include "Panel.h"
 #include "../Graphics/GameWindow.h"
 #include "../Map/Map.h"
+#include "CharacterPanel.h"
 
 class FightScreen :public Panel{
 private:
@@ -13,7 +14,8 @@ private:
     static FightScreen* singleton;
     std::stack<int> turnOrder;
     int selectedMove;
-    Panel* characterPanel;
+    int selectedEntity;
+    CharacterPanel** characterPanel;
     Panel* mapPanel;
     Map* currentMap;
 

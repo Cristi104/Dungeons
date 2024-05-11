@@ -154,6 +154,11 @@ add_executable(${PROJECT_NAME}
         include/UserInterface/Drawn.h
         src/UserInterface/MovePopup.cpp
         include/UserInterface/MovePopup.h
+        src/UserInterface/MapPanel.cpp
+        include/UserInterface/MapPanel.h
+        src/UserInterface/Drawn.cpp
+        src/UserInterface/CharacterPanel.cpp
+        include/UserInterface/CharacterPanel.h
 )
 
 ###############################################################################
