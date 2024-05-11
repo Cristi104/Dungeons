@@ -20,6 +20,6 @@ int Component::getPriority() const {
     return priority;
 }
 
-void Component::addPosition(sf::Vector2f position) {
-    this->sprite.setPosition(this->sprite.getPosition() + position);
+void Component::addPos(float x, float y) {
+    this->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(x,y));
 }

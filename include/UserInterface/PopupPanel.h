@@ -7,6 +7,7 @@ class PopupPanel : public Button{
 protected:
     Panel panel;
 
+    void addPos(float x, float y) override;
 public:
 
     PopupPanel();
@@ -18,8 +19,6 @@ public:
     /// 5 - last drawn, on top of everything else
     /// @param window draw target
     void draw(sf::RenderWindow& window) override;
-
-    void addPosition(sf::Vector2f position) override;
 
     bool handleEvent(const sf::Event& event) override;
 

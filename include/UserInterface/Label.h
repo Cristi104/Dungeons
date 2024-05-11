@@ -8,6 +8,10 @@ class Label : public Component {
 private:
     sf::Text text;
     sf::Font font;
+
+protected:
+
+    void addPos(float x, float y) override;
 public:
 
     /// creates a Label of priority 3 and size 14 font
@@ -32,7 +36,7 @@ public:
     /// sets the text without wrapping
     void setFormatedText(const std::string& string);
 
-    void addPosition(sf::Vector2f position) override;
+    sf::Text &getText();
 };
 
 #endif //OOP_LABEL_H

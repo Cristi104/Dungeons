@@ -31,8 +31,7 @@ int PopupPanel::addComponent(Component *component) {
     return this->panel.addComponent(component);
 }
 
-void PopupPanel::addPosition(sf::Vector2f position) {
-    Button::addPosition(position);
-    this->panel.addPosition(position);
+void PopupPanel::addPos(float x, float y) {
+    Button::addPos(x, y);
+    this->panel.addPosition<sf::Vector2f>({x,y});
 }
-

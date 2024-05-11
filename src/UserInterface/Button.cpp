@@ -1,7 +1,7 @@
 #include "../../include/UserInterface/Button.h"
 
 Button::Button(int priority) : Component(priority) {
-    this->boundingBox = sf::IntRect(0,0,50,50);
+    this->boundingBox = sf::FloatRect (0,0,50,50);
     this->wasPressed = false;
 }
 
@@ -13,17 +13,12 @@ bool Button::isPressed() {
     return false;
 }
 
-void Button::setBoundingBox(const sf::IntRect &box) {
+void Button::setBoundingBox(const sf::FloatRect &box) {
     this->boundingBox = box;
-}
-
-sf::RectangleShape &Button::getIcon() {
-    return this->icon;
 }
 
 void Button::draw(sf::RenderWindow &window) {
     window.draw(this->getRectangleShape());
-    window.draw(this->getIcon());
 }
 
 bool Button::handleEvent(const sf::Event &event) {
@@ -38,9 +33,9 @@ bool Button::handleEvent(const sf::Event &event) {
     return false;
 }
 
-void Button::addPosition(sf::Vector2f position) {
-    Component::addPosition(position);
-    this->icon.setPosition(this->icon.getPosition() + position);
-    this->boundingBox.left += (int)position.x;
-    this->boundingBox.top += (int)position.y;
+void Button::addPos(float x, float y) {
+    Component::addPos(x, y);
+    this->boundingBox.left += x;
+    this->boundingBox.top += y;
 }
+

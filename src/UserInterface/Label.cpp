@@ -1,4 +1,5 @@
 #include "../../include/UserInterface/Label.h"
+#include "../../include/Graphics/Settings.h"
 #include <cstring>
 #include <iostream>
 
@@ -34,15 +35,17 @@ Label::Label(int fontSize, int priority) : Component(priority){
     if (!this->font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf"))
         std::cout << "Failed to load font.\n";
     this->text.setFont(this->font);
-    this->text.setCharacterSize(fontSize);
+    this->text.setCharacterSize((unsigned int)((float)fontSize * Settings::getInstance()->getScaleHeight()));
+    this->text.setFillColor(sf::Color(62,64,100));
 }
 
 Label::Label(const std::string& text, int fontSize, int maxLength, int priority) : Component(priority){
     if (!this->font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf"))
         std::cout << "Failed to load font.\n";
     this->text.setFont(this->font);
-    this->text.setCharacterSize(fontSize);
+    this->text.setCharacterSize((unsigned int)((float)fontSize * Settings::getInstance()->getScaleHeight()));
     this->setText(text, maxLength);
+    this->text.setFillColor(sf::Color(62,64,100));
 }
 
 void Label::draw(sf::RenderWindow &window) {
@@ -50,11 +53,15 @@ void Label::draw(sf::RenderWindow &window) {
     window.draw(this->text);
 }
 
-void Label::addPosition(sf::Vector2f position) {
-    Component::addPosition(position);
-    this->text.setPosition(this->text.getPosition() + position);
-}
-
 void Label::setFormatedText(const std::string &string) {
     this->text.setString(string);
+}
+
+void Label::addPos(float x, float y) {
+    Component::addPos(x, y);
+    this->text.setPosition(this->text.getPosition() + sf::Vector2f(x,y));
+}
+
+sf::Text &Label::getText(){
+    return text;
 }

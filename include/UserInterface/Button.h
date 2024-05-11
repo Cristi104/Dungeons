@@ -7,12 +7,12 @@
 
 class Button : public Component , public EventHandler{
 private:
-    sf::RectangleShape icon;
     bool wasPressed;
 
 protected:
-    sf::IntRect boundingBox;
+    sf::FloatRect boundingBox;
 
+    void addPos(float x, float y) override;
 public:
 
     /// creates a 50x50 button with priority 5
@@ -26,15 +26,11 @@ public:
     bool isPressed();
 
     /// sets the size and position of the click hitBox
-    void setBoundingBox(const sf::IntRect& box);
-
-    sf::RectangleShape& getIcon();
+    void setBoundingBox(const sf::FloatRect& box);
 
     /// draws the Button
     /// @param window draw target
     void draw(sf::RenderWindow& window) override;
-
-    void addPosition(sf::Vector2f position) override;
 };
 
 

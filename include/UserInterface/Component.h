@@ -10,7 +10,9 @@ class Component : public Drawn{
 private:
     sf::RectangleShape sprite;
     int priority;
+protected:
 
+    void addPos(float x, float y) override;
 public:
 
     /// creates an empty component of priority 1
@@ -21,8 +23,6 @@ public:
     sf::RectangleShape& getRectangleShape();
 
     void draw(sf::RenderWindow& window) override;
-
-    void addPosition(sf::Vector2f position) override;
 
     /// sets the draw order priority 0 - first, 5 - last
     /// @param value new priority
