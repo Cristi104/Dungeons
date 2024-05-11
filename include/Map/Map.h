@@ -16,7 +16,6 @@ private:
     }** map;
     sf::Vector2i size;
     sf::RenderTexture texture;
-    sf::RectangleShape sprite;
 
     sf::Vector2i extend(const Biome& biome, sf::Vector2i position, int length = 1);
 
@@ -29,7 +28,11 @@ public:
 
     const sf::RenderTexture &getTexture() const;
 
-    sf::RectangleShape &getSprite();
+    const sf::Vector2i &getSize() const;
+
+    Room* getRoom(sf::Vector2i index);
+
+    Road* getRoad(sf::Vector2i index, int direction);
 };
 
 #endif //OOP_MAP_H

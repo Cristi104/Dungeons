@@ -65,7 +65,6 @@ Map::Map(const Biome &biome) {
         }
     }
     this->texture.display();
-    this->sprite.setTexture(&this->texture.getTexture());
 }
 
 sf::Vector2i Map::extend(const Biome &biome, sf::Vector2i position, int length) {
@@ -109,10 +108,6 @@ sf::Vector2i Map::extend(const Biome &biome, sf::Vector2i position, int length) 
     return position;
 }
 
-sf::RectangleShape &Map::getSprite(){
-    return sprite;
-}
-
 Map::~Map() {
     for(int i = 0; i < this->size.y; i++){
         for(int j = 0; j < this->size.x; j++){
@@ -128,4 +123,26 @@ Map::~Map() {
 
 const sf::RenderTexture &Map::getTexture() const {
     return texture;
+}
+
+const sf::Vector2i &Map::getSize() const {
+    return size;
+}
+
+Room *Map::getRoom(sf::Vector2i index) {
+    if(index.x > this->size.x)
+        return nullptr;
+    if(index.y > this->size.y)
+        return nullptr;
+    return this->map[index.x][index.y].room;
+}
+
+Road *Map::getRoad(sf::Vector2i index, int direction) {
+    if(direction < 0 || direction > 3)
+        return nullptr;
+    if(index.x > this->size.x)
+        return nullptr;
+    if(index.y > this->size.y)
+        return nullptr;
+    return this->map[index.x][index.y].roads[direction];
 }
