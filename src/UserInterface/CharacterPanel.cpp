@@ -24,8 +24,8 @@ CharacterPanel::CharacterPanel(Entity *entity) :Panel(){
                                           650 * Settings::getInstance()->getScaleHeight()});
     healthBar->getRectangleShape().setScale({(float)this->entity->getHealth()/ (float)this->entity->getMaxHealth(),1});
     this->addComponent(healthBar);
+    MovePopup* popup = nullptr;
     for(int i = 0; i < 6; i++){
-        MovePopup* popup;
         if(i < 4){
             popup = new MovePopup(&entity->getMoves()[i]);
             popup->getRectangleShape().setTexture(GameWindow::getTexture(entity->getMoves()[i].getName()));
@@ -38,13 +38,15 @@ CharacterPanel::CharacterPanel(Entity *entity) :Panel(){
             popup = new MovePopup(new Move);
             popup->getRectangleShape().setTexture(GameWindow::getTexture("Skip"));
         }
-        popup->setBoundingBox({0,
-                               0,
-                               64 * Settings::getInstance()->getScaleWidth(),
-                               64 * Settings::getInstance()->getScaleHeight()});
-        popup->getRectangleShape().setSize({64 * Settings::getInstance()->getScaleWidth(), 64 * Settings::getInstance()->getScaleHeight()});
-        popup->addPosition<sf::Vector2f>({(float)(210 + 65 * i) * Settings::getInstance()->getScaleWidth(), (470 * Settings::getInstance()->getScaleHeight())});
-        this->addComponent(popup);
+        if(popup){
+            popup->setBoundingBox({0,
+                                   0,
+                                   64 * Settings::getInstance()->getScaleWidth(),
+                                   64 * Settings::getInstance()->getScaleHeight()});
+            popup->getRectangleShape().setSize({64 * Settings::getInstance()->getScaleWidth(), 64 * Settings::getInstance()->getScaleHeight()});
+            popup->addPosition<sf::Vector2f>({(float)(210 + 65 * i) * Settings::getInstance()->getScaleWidth(), (470 * Settings::getInstance()->getScaleHeight())});
+            this->addComponent(popup);
+        }
     }
     const Stats& stats = entity->getStats();
     auto* label = new Label("Speed: " + std::to_string(stats.getValue(EffectType::SPEED)),20,20);
