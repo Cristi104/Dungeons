@@ -8,7 +8,10 @@ Road::Road(const Biome &biome) {
     std::random_device device;
     std::mt19937 gen(device());
     std::uniform_int_distribution<> random(1,100);
-    this->length = biome.getRoadLengthMin() + random(gen) % (biome.getRoadLengthMax() - biome.getRoadLengthMin());
+    if(biome.getRoadLengthMax() == biome.getRoadLengthMin())
+        this->length = biome.getRoadLengthMin();
+    else
+        this->length = biome.getRoadLengthMin() + random(gen) % (biome.getRoadLengthMax() - biome.getRoadLengthMin());
 }
 
 MapEvent Road::pass() {
