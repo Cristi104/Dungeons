@@ -6,10 +6,10 @@ enum Positions{
     BACKALLY2 = 2,
     FRONTALLY1 = 4,
     FRONTALLY2 = 8,
-    BACKENEMY1 = 16,
-    BACKENEMY2 = 32,
-    FRONTENEMY1 = 64,
-    FRONTENEMY2 = 128
+    FRONTENEMY1 = 16,
+    FRONTENEMY2 = 32,
+    BACKENEMY1 = 64,
+    BACKENEMY2 = 128
 };
 
 #endif //OOP_POSITIONS_H
