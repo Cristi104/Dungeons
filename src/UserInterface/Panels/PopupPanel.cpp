@@ -1,4 +1,4 @@
-#include "../../include/UserInterface/PopupPanel.h"
+#include "../../../include/UserInterface/Panels/PopupPanel.h"
 
 PopupPanel::PopupPanel() : Button(){
 }

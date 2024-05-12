@@ -3,8 +3,8 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Drawn.h"
-#include "Drawn.h"
+#include "../Graphics/Drawn.h"
+#include "../Graphics/Drawn.h"
 
 class Component : public Drawn{
 private:

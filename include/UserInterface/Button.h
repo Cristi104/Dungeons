@@ -5,7 +5,7 @@
 #include "SFML/Window/Event.hpp"
 #include "EventHandler.h"
 
-class Button : public Component , public EventHandler{
+class Button : public Component , public EventHandler<bool>{
 private:
     bool wasPressed;
 
@@ -28,7 +28,7 @@ public:
     /// sets the size and position of the click hitBox
     void setBoundingBox(const sf::FloatRect& box);
 
-    /// draws the Button
+    virtual /// draws the Button
     /// @param window draw target
     void draw(sf::RenderWindow& window) override;
 };

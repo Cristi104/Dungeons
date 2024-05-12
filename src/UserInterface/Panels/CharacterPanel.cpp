@@ -1,6 +1,6 @@
-#include "../../include/UserInterface/CharacterPanel.h"
-#include "../../include/UserInterface/MovePopup.h"
-#include "../../include/UserInterface/Border.h"
+#include "../../../include/UserInterface/Panels/CharacterPanel.h"
+#include "../../../include/UserInterface/Panels/MovePopup.h"
+#include "../../../include/UserInterface/Border.h"
 
 CharacterPanel::CharacterPanel(Entity *entity) :Panel(){
     this->entity = entity;

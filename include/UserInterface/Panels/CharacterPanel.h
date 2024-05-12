@@ -2,7 +2,7 @@
 #define OOP_CHARACTERPANEL_H
 
 #include "Panel.h"
-#include "../Entity/Entity.h"
+#include "../../Entity/Entity.h"
 
 class CharacterPanel : public Panel{
 private:

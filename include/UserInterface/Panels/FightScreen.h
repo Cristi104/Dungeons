@@ -2,10 +2,10 @@
 #define OOP_FIGHTSCREEN_H
 
 #include <stack>
-#include "../Entity/Entity.h"
+#include "../../Entity/Entity.h"
 #include "Panel.h"
-#include "../Graphics/GameWindow.h"
-#include "../Map/Map.h"
+#include "../../Graphics/GameWindow.h"
+#include "../../Map/Map.h"
 #include "CharacterPanel.h"
 
 class FightScreen :public Panel{
@@ -50,7 +50,7 @@ public:
 
     void draw(sf::RenderWindow& window) override;
 
-    bool handleEvent(const sf::Event& event) override;
+    int handleEvent(const sf::Event& event) override;
 
     /// recreates the turnOrder if it is empty
     void turn();

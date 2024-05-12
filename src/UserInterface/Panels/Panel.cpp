@@ -1,6 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics/Sprite.hpp>
-#include "../../include/UserInterface/Panel.h"
+#include "../../../include/UserInterface/Panels/Panel.h"
 
 Panel::Panel() {
     this->visible = false;
@@ -41,17 +41,17 @@ Panel::~Panel() {
     }
 }
 
-bool Panel::handleEvent(const sf::Event &event) {
+int Panel::handleEvent(const sf::Event &event) {
     if(!this->visible)
         return false;
-    for(Component* p : this->components){
-        EventHandler* handler = dynamic_cast<Button*>(p);
+    for(int i = 0; i < (int)this->components.size(); i++){
+        auto* handler = dynamic_cast<Button*>(this->components[i]);
         if(!handler)
             continue;
         if(handler->handleEvent(event))
-            return true;
+            return i;
     }
-    return false;
+    return 0;
 }
 
 bool Panel::isVisible() const {

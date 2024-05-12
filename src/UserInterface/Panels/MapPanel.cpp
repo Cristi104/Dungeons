@@ -1,5 +1,5 @@
-#include "../../include/UserInterface/MapPanel.h"
-#include "../../include/UserInterface/Border.h"
+#include "../../../include/UserInterface/Panels/MapPanel.h"
+#include "../../../include/UserInterface/Border.h"
 
 MapPanel::MapPanel(Map* map) : Panel(){
     this->map = map;

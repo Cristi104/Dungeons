@@ -1,5 +1,5 @@
 #include "../include/Game.h"
-#include "../include/UserInterface/FightScreen.h"
+#include "../include/UserInterface/Panels/FightScreen.h"
 
 Game::Game() {
     this->panels.reserve(5);

@@ -1,7 +1,7 @@
 #ifndef OOP_GAME_H
 #define OOP_GAME_H
 
-#include "UserInterface/Panel.h"
+#include "UserInterface/Panels/Panel.h"
 
 class Game {
 private:

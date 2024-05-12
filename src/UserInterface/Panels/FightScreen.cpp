@@ -1,9 +1,9 @@
 #include <iostream>
 #include <valarray>
 #include <thread>
-#include "../../include/UserInterface/FightScreen.h"
-#include "../../include/UserInterface/Border.h"
-#include "../../include/UserInterface/MapPanel.h"
+#include "../../../include/UserInterface/Panels/FightScreen.h"
+#include "../../../include/UserInterface/Border.h"
+#include "../../../include/UserInterface/Panels/MapPanel.h"
 
 FightScreen* FightScreen::singleton = nullptr;
 
@@ -161,60 +161,59 @@ FightScreen *FightScreen::getInstance() {
     return FightScreen::singleton;
 }
 
-bool FightScreen::handleEvent(const sf::Event &event) {
+int FightScreen::handleEvent(const sf::Event &event) {
     if(this->characterPanel[this->selectedEntity])
         if(this->characterPanel[this->selectedEntity]->handleEvent(event))
             return true;
-    if(this->mapPanel->handleEvent(event))
-        return true;
+//    if(this->mapPanel->handleEvent(event))
+//        return true;
     if(!this->visible)
-        return false;
+        return 0;
     if(turnOrder.top() >= 4)
-        return false;
+        return 0;
     if(event.type == sf::Event::KeyPressed){
-//        std::cout<<"miscare\n";
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) &&
            (FightScreen::getPosition(turnOrder.top()) &
             this->entities[turnOrder.top()]->getMoves()[0].getCastPosition())){
             this->selectedMove = 1;
-            return true;
+            return 1;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) &&
            (FightScreen::getPosition(turnOrder.top()) &
             this->entities[turnOrder.top()]->getMoves()[1].getCastPosition())){
             this->selectedMove = 2;
-            return true;
+            return 2;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) &&
            (FightScreen::getPosition(turnOrder.top()) &
             this->entities[turnOrder.top()]->getMoves()[2].getCastPosition())){
             this->selectedMove = 3;
-            return true;
+            return 3;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) &&
            (FightScreen::getPosition(turnOrder.top()) &
             this->entities[turnOrder.top()]->getMoves()[3].getCastPosition())){
             this->selectedMove = 4;
-            return true;
+            return 4;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)){
             this->selectedMove = 5;
-            return true;
+            return 5;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)){
             std::cout << "end turn\n";
             this->endEntityTurn();
-            return true;
+            return 6;
         }
     }
     if(event.type == sf::Event::MouseButtonPressed){
         if(this->selectedMove == 0)
-            return false;
+            return 0;
         Move* move;
         if(this->selectedMove < 5){
             move = &this->entities[this->turnOrder.top()]->getMoves()[this->selectedMove - 1];
             for (int i = 0; i < 8; i++) {
-                EventHandler* handler = dynamic_cast<Button *>(this->components[i]);
+                auto* handler = dynamic_cast<Button *>(this->components[i]);
                 if(!handler)
                     continue;
                 if (!handler->handleEvent(event))
@@ -245,7 +244,7 @@ bool FightScreen::handleEvent(const sf::Event &event) {
             }
         }
     }
-    return false;
+    return 0;
 }
 
 void FightScreen::turn() {

@@ -6,7 +6,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "Room.h"
 #include "Biome.h"
-#include "../UserInterface/Panel.h"
+#include "../UserInterface/Panels/Panel.h"
 
 class Map{
 private:

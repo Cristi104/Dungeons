@@ -2,7 +2,7 @@
 #define OOP_MAPPANEL_H
 
 #include "Panel.h"
-#include "../Map/Map.h"
+#include "../../Map/Map.h"
 
 class MapPanel : public Panel{
 private:

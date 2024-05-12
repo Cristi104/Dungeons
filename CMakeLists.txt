@@ -109,13 +109,13 @@ add_executable(${PROJECT_NAME}
         env_fixes.h
         include/Graphics/GameWindow.h
         src/Graphics/GameWindow.cpp
-        include/UserInterface/Panel.h
-        src/UserInterface/Panel.cpp
+        include/UserInterface/Panels/Panel.h
+        src/UserInterface/Panels/Panel.cpp
         include/Entity/Entity.h
         src/Entity/Entity.cpp
         include/Graphics/Settings.h
-        include/UserInterface/FightScreen.h
-        src/UserInterface/FightScreen.cpp
+        include/UserInterface/Panels/FightScreen.h
+        src/UserInterface/Panels/FightScreen.cpp
         src/Graphics/Settings.cpp
         include/Entity/EffectType.h
         include/Entity/Positions.h
@@ -148,17 +148,17 @@ add_executable(${PROJECT_NAME}
         include/Map/Map.h
         src/Game.cpp
         include/Game.h
-        src/UserInterface/PopupPanel.cpp
-        include/UserInterface/PopupPanel.h
+        src/UserInterface/Panels/PopupPanel.cpp
+        include/UserInterface/Panels/PopupPanel.h
         include/UserInterface/EventHandler.h
-        include/UserInterface/Drawn.h
-        src/UserInterface/MovePopup.cpp
-        include/UserInterface/MovePopup.h
-        src/UserInterface/MapPanel.cpp
-        include/UserInterface/MapPanel.h
-        src/UserInterface/Drawn.cpp
-        src/UserInterface/CharacterPanel.cpp
-        include/UserInterface/CharacterPanel.h
+        include/Graphics/Drawn.h
+        src/UserInterface/Panels/MovePopup.cpp
+        include/UserInterface/Panels/MovePopup.h
+        src/UserInterface/Panels/MapPanel.cpp
+        include/UserInterface/Panels/MapPanel.h
+        src/Graphics/Drawn.cpp
+        src/UserInterface/Panels/CharacterPanel.cpp
+        include/UserInterface/Panels/CharacterPanel.h
 )
 
 ###############################################################################

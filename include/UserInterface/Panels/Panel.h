@@ -8,12 +8,12 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
-#include "../Graphics/GameWindow.h"
-#include "Component.h"
-#include "Button.h"
-#include "Label.h"
+#include "../../Graphics/GameWindow.h"
+#include "../Component.h"
+#include "../Button.h"
+#include "../Label.h"
 
-class Panel : public EventHandler , public Drawn{
+class Panel : public EventHandler<int> , public Drawn{
 protected:
     bool visible;
     std::vector<Component*> components;
@@ -31,9 +31,9 @@ public:
 
     Panel& operator=(const Panel& panel) = delete;
 
-    bool handleEvent(const sf::Event& event) override;
+    int handleEvent(const sf::Event& event) override;
 
-    /// draws the Panel. Components are drawn in order of the priority attribute from
+    virtual /// draws the Panel. Components are drawn in order of the priority attribute from
     /// 0 - first drawn, behind everything else to
     /// 5 - last drawn, on top of everything else
     /// @param window draw target

@@ -2,7 +2,7 @@
 #define OOP_MOVEPOPUP_H
 
 #include "PopupPanel.h"
-#include "../Entity/Move.h"
+#include "../../Entity/Move.h"
 
 class MovePopup : public PopupPanel{
 private:

@@ -1,5 +1,5 @@
-#include "../../include/UserInterface/MovePopup.h"
-#include "../../include/UserInterface/Border.h"
+#include "../../../include/UserInterface/Panels/MovePopup.h"
+#include "../../../include/UserInterface/Border.h"
 #include <cmath>
 
 MovePopup::MovePopup(const Move *move) : PopupPanel(){
