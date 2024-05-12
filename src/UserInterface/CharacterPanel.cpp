@@ -7,7 +7,7 @@ CharacterPanel::CharacterPanel(Entity *entity) :Panel(){
     auto* border = new Border({0,
                                (int)(440 * Settings::getInstance()->getScaleHeight()),
                                Settings::getInstance()->getResolutionWidth() / 2,
-                               (int)((720 - 440)* Settings::getInstance()->getScaleHeight())});
+                               (int)((720 - 440)* Settings::getInstance()->getScaleHeight())},1,"blueBorder");
     this->addComponent(border);
     auto* healthBarBackground = new Component();
     healthBarBackground->getRectangleShape().setTexture(GameWindow::getTexture("HealthBar"));
@@ -18,9 +18,9 @@ CharacterPanel::CharacterPanel(Entity *entity) :Panel(){
     this->addComponent(healthBarBackground);
     auto* healthBar = new Component();
     healthBar->getRectangleShape().setTexture(GameWindow::getTexture("Health"));
-    healthBar->getRectangleShape().setSize({364 * Settings::getInstance()->getScaleWidth(),
+    healthBar->getRectangleShape().setSize({361 * Settings::getInstance()->getScaleWidth(),
                                             32 * Settings::getInstance()->getScaleHeight()});
-    healthBar->addPosition<sf::Vector2f>({218 * Settings::getInstance()->getScaleWidth(),
+    healthBar->addPosition<sf::Vector2f>({219.5f * Settings::getInstance()->getScaleWidth(),
                                           650 * Settings::getInstance()->getScaleHeight()});
     healthBar->getRectangleShape().setScale({(float)this->entity->getHealth()/ (float)this->entity->getMaxHealth(),1});
     this->addComponent(healthBar);
@@ -91,5 +91,4 @@ void CharacterPanel::update() {
     dynamic_cast<Label*>(this->getComponent(11))->setFormatedText("Bleed resist: " + std::to_string(stats.getValue(EffectType::BLEED))+ '%');
     dynamic_cast<Label*>(this->getComponent(12))->setFormatedText("Burn resist: " + std::to_string(stats.getValue(EffectType::BURN)) + '%');
     dynamic_cast<Label*>(this->getComponent(13))->setFormatedText(std::to_string(this->entity->getHealth()) + "/" + std::to_string(this->entity->getMaxHealth()));
-
 }

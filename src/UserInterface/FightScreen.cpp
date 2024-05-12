@@ -2,11 +2,8 @@
 #include <valarray>
 #include <thread>
 #include "../../include/UserInterface/FightScreen.h"
-#include "../../include/UserInterface/PopupPanel.h"
 #include "../../include/UserInterface/Border.h"
-#include "../../include/UserInterface/MovePopup.h"
 #include "../../include/UserInterface/MapPanel.h"
-#include "../../include/UserInterface/CharacterPanel.h"
 
 FightScreen* FightScreen::singleton = nullptr;
 
@@ -25,6 +22,39 @@ FightScreen::FightScreen() :Panel() {
                                 200 * Settings::getInstance()->getScaleHeight()});
         this->addComponent(button);
     }
+    for(int i = 0; i < 8; i++){
+        auto* component = new Component(2);
+        if(i < 4)
+            component->getRectangleShape().setTexture(GameWindow::getTexture("SelectorAlly"));
+        else
+            component->getRectangleShape().setTexture(GameWindow::getTexture("SelectorEnemy"));
+        component->getRectangleShape().setSize({80 * Settings::getInstance()->getScaleWidth(),
+                                                28 * Settings::getInstance()->getScaleHeight()});
+        component->addPosition<sf::Vector2f>(FightScreen::getCoordsOfIndex(i));
+        component->addPosition<sf::Vector2f>({10 * Settings::getInstance()->getScaleWidth(),
+                                              185 * Settings::getInstance()->getScaleHeight()});
+        this->addComponent(component);
+    }
+    for(int i = 0; i < 8; i++){
+        auto* component = new Component();
+        component->getRectangleShape().setTexture(GameWindow::getTexture("HealthBar"));
+        component->getRectangleShape().setSize({80 * Settings::getInstance()->getScaleWidth(),
+                                                12 * Settings::getInstance()->getScaleHeight()});
+        component->addPosition<sf::Vector2f>(FightScreen::getCoordsOfIndex(i));
+        component->addPosition<sf::Vector2f>({10 * Settings::getInstance()->getScaleWidth(),
+                                              205 * Settings::getInstance()->getScaleHeight()});
+        this->addComponent(component);
+    }
+    for(int i = 0; i < 8; i++){
+        auto* component = new Component();
+        component->getRectangleShape().setTexture(GameWindow::getTexture("Health"));
+        component->getRectangleShape().setSize({76 * Settings::getInstance()->getScaleWidth(),
+                                                12 * Settings::getInstance()->getScaleHeight()});
+        component->addPosition<sf::Vector2f>(FightScreen::getCoordsOfIndex(i));
+        component->addPosition<sf::Vector2f>({12 * Settings::getInstance()->getScaleWidth(),
+                                              205 * Settings::getInstance()->getScaleHeight()});
+        this->addComponent(component);
+    }
     this->characterPanel = new CharacterPanel*[4];
     for(int i = 0; i < 4; i++)this->characterPanel[i] = nullptr;
     this->currentMap = new Map;
@@ -38,6 +68,9 @@ FightScreen::~FightScreen() {
         if(this->entities[i] != nullptr)
             delete this->entities[i];
     delete[] this->entities;
+    for(int i = 0; i < 4; i++)
+        if(this->characterPanel[i] != nullptr)
+            delete this->characterPanel[i];
     delete this->characterPanel;
     delete this->mapPanel;
     delete this->currentMap;
@@ -62,17 +95,11 @@ sf::Vector2f FightScreen::getCoordsOfIndex(int index) {
 }
 
 void FightScreen::addEntity(Entity* entity) {
-    int index = FightScreen::getIndex(entity->getPosition());
+    int index = entity->getPosition();
     this->entities[index] = entity;
     if(index < 4)
         this->characterPanel[index] = new CharacterPanel(entity);
     entity->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index));
-}
-
-void FightScreen::swapEntities(Positions position1, Positions position2) {
-    int i1 = FightScreen::getIndex(position1);
-    int i2 = FightScreen::getIndex(position2);
-    this->swapEntities(i1, i2);
 }
 
 void FightScreen::swapEntities(int index1, int index2) {
@@ -90,17 +117,14 @@ void FightScreen::swapEntities(int index1, int index2) {
         this->entities[index2]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index2));
 }
 
-void FightScreen::deleteEntity(Positions position) {
-    int i = FightScreen::getIndex(position);
-    this->deleteEntity(i);
-}
-
 void FightScreen::deleteEntity(int index) {
     delete this->entities[index];
     this->entities[index] = nullptr;
     if(index < 4){
         for(int j = 0; j < index - 1; j++)
             this->swapEntities(j,j + 1);
+        delete this->characterPanel[index];
+        this->characterPanel[index] = nullptr;
     } else {
         for(int j = 7; j > index + 1; j--)
             this->swapEntities(j,j - 1);
@@ -113,7 +137,19 @@ void FightScreen::draw(sf::RenderWindow &window) {
             entities[i]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(i));
             window.draw(entities[i]->getRectangleShape());
         }
-    Panel::draw(window);
+    for(int i = 0; i < 8; i++){
+        if(this->selectedMove >= 1 && this->selectedMove <= 4)
+            if((int)this->entities[turnOrder.top()]->getMoves()[this->selectedMove-1].getRange() & (int)FightScreen::getPosition(i) &&
+                    this->entities[i] != nullptr)
+                this->getComponent(i + 8)->draw(window);
+    }
+    for(int i = 0; i < 8; i++){
+        if(this->entities[i]){
+            this->getComponent(i+16)->draw(window);
+            this->getComponent(i+24)->getRectangleShape().setScale({(float)this->entities[i]->getHealth()/ (float)this->entities[i]->getMaxHealth(),1});
+            this->getComponent(i+24)->draw(window);
+        }
+    }
     this->mapPanel->draw(window);
     if(this->characterPanel[this->selectedEntity])
         this->characterPanel[this->selectedEntity]->draw(window);

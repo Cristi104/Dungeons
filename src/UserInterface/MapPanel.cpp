@@ -8,7 +8,7 @@ MapPanel::MapPanel(Map* map) : Panel(){
     auto* border = new Border({Settings::getInstance()->getResolutionWidth() / 2,
                          (int)(440 * Settings::getInstance()->getScaleHeight()),
                          Settings::getInstance()->getResolutionWidth() / 2,
-                         (int)((720 - 440)* Settings::getInstance()->getScaleHeight())});
+                         (int)((720 - 440)* Settings::getInstance()->getScaleHeight())},1,"blueBorder");
     this->addComponent(border);
     pComponent->getRectangleShape().setTexture(&this->map->getTexture().getTexture());
     pComponent->getRectangleShape().setSize({(float)(this->size.x * 48) * Settings::getInstance()->getScaleWidth(),

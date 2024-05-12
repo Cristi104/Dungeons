@@ -8,7 +8,7 @@ Entity::Entity() {
     this->textureName = "None";
     this->health = 0;
     this->maxHealth = 0;
-    this->position = static_cast<Positions>(1);
+    this->position = 1;
     this->statusEffects.resize(0);
     this->sprite.setSize({120 * Settings::getInstance()->getScaleWidth(),
                           200 * Settings::getInstance()->getScaleHeight()});
@@ -26,9 +26,11 @@ Entity::Entity(const Entity &entity) {
     this->maxHealth = entity.maxHealth;
     this->position = entity.position;
     this->statusEffects = entity.statusEffects;
+    this->stats = entity.stats;
 }
 
 Entity &Entity::operator=(const Entity &entity) {
+    if(&entity == this) return *this;
     this->sprite = entity.sprite;
     this->name = entity.name;
     this->textureName = entity.textureName;
@@ -39,6 +41,7 @@ Entity &Entity::operator=(const Entity &entity) {
     this->statusEffects = entity.statusEffects;
     for(int i = 0; i < 4; i++)
         this->moves[i] = entity.moves[i];
+    this->stats = entity.stats;
     return *this;
 }
 
@@ -113,7 +116,7 @@ void Entity::turn() {
     }
 }
 
-Positions Entity::getPosition() const {
+int Entity::getPosition() const {
     return position;
 }
 
@@ -129,10 +132,10 @@ Entity::Entity(int id) {
     this->moves = new Move[4];
     this->sprite.setSize({120 * Settings::getInstance()->getScaleWidth(),
                           200 * Settings::getInstance()->getScaleHeight()});
-    this->position = static_cast<Positions>(1);
+    this->position = 0;
     switch (id) {
         case 0://knight
-            this->health = 18;
+            this->health = 10;
             this->maxHealth = 20;
             this->moves[0] = Move("Shield Bash",
                                   static_cast<Positions>(Positions::FRONTALLY2),

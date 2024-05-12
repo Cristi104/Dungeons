@@ -20,7 +20,7 @@ private:
     Stats stats;
     int health;
     int maxHealth;
-    Positions position;
+    int position;
     std::vector<StatusEffect> statusEffects;
     Move* moves;
 
@@ -70,7 +70,7 @@ public:
     /// decrements and deletes the StatusEffects applied to the entity every turn
     void turn();
 
-    Positions getPosition() const;
+    int getPosition() const;
 };
 
 #endif //OOP_ENTITY_H

@@ -40,18 +40,9 @@ public:
     void addEntity(Entity* entity);
 
     /// swaps 2 entities
-    /// @param position1 Position of first entity
-    /// @param position2 Position of second entity;
-    void swapEntities(Positions position1, Positions position2);
-
-    /// swaps 2 entities
     /// @param index1 index of first entity
     /// @param index2 index of second entity
     void swapEntities(int index1, int index2);
-
-    /// delete entity at a position
-    /// @param position Position of entity object
-    void deleteEntity(Positions position);
 
     /// delete entity at a index
     /// @param index index of entity object
