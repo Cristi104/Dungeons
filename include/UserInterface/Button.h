@@ -28,7 +28,7 @@ public:
     /// sets the size and position of the click hitBox
     void setBoundingBox(const sf::FloatRect& box);
 
-    virtual /// draws the Button
+    /// draws the Button
     /// @param window draw target
     void draw(sf::RenderWindow& window) override;
 };

@@ -17,10 +17,12 @@ public:
     /// @tparam T a type of vector with x and y coordinates
     /// @param position vector to be added
     template<typename T>
-    void addPosition(T position) {
-        this->addPos(position.x, position.y);
-    }
+    void addPosition(T position);
 };
 
+template<typename T>
+void Drawn::addPosition(T position) {
+    this->addPos(position.x, position.y);
+}
 
 #endif //OOP_DRAWN_H

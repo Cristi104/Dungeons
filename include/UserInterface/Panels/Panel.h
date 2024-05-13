@@ -33,7 +33,7 @@ public:
 
     int handleEvent(const sf::Event& event) override;
 
-    virtual /// draws the Panel. Components are drawn in order of the priority attribute from
+    /// draws the Panel. Components are drawn in order of the priority attribute from
     /// 0 - first drawn, behind everything else to
     /// 5 - last drawn, on top of everything else
     /// @param window draw target

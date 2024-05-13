@@ -1,5 +1,6 @@
 #include "../include/Game.h"
 #include "../include/UserInterface/Panels/FightScreen.h"
+#include "../include/Graphics/Animation.h"
 
 Game::Game() {
     this->panels.reserve(5);
@@ -15,7 +16,10 @@ int Game::start() {
 
 //    testView.reset({0,0,1200,700});
 //    testView.setViewport({0,0,0.5,1});
-
+    Animation<sf::RectangleShape> testAnimation(0,5,20);
+    testAnimation.setMoves({{10, 10},{10,10},{10,10},{10,10},{10,10}});
+    testAnimation.getSprite().setTexture(GameWindow::getTexture("None"));
+    testAnimation.getSprite().setSize({100,100});
     while(this->window->getWindow().isOpen() && running){
         sf::Event event{};
         while(this->window->getWindow().pollEvent(event)){
@@ -37,6 +41,7 @@ int Game::start() {
 //        window->getWindow().setView(testView);
         FightScreen::getInstance()->draw(this->window->getWindow());
 //        window->getWindow().setView(window->getWindow().getDefaultView());
+        testAnimation.draw(this->window->getWindow());
         this->window->getWindow().display();
     }
     GameWindow::freeTextures();

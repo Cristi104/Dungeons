@@ -159,6 +159,8 @@ add_executable(${PROJECT_NAME}
         src/Graphics/Drawn.cpp
         src/UserInterface/Panels/CharacterPanel.cpp
         include/UserInterface/Panels/CharacterPanel.h
+        src/Graphics/Animation.cpp
+        include/Graphics/Animation.h
 )
 
 ###############################################################################
