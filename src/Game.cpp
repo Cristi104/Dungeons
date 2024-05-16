@@ -1,6 +1,7 @@
 #include "../include/Game.h"
 #include "../include/UserInterface/Panels/FightScreen.h"
 #include "../include/Graphics/Animation.h"
+#include "../include/Entity/EntityFactory.h"
 
 Game::Game() {
     this->panels.reserve(5);
@@ -9,9 +10,10 @@ Game::Game() {
 }
 
 int Game::start() {
-    FightScreen::getInstance()->addEntity(new Entity(0));
+    EntityFactory factory;
+    FightScreen::getInstance()->addEntity(factory.createEntity(0));
     FightScreen::getInstance()->swapEntities(0,3);
-    FightScreen::getInstance()->addEntity(new Entity(2));
+    FightScreen::getInstance()->addEntity(factory.createEntity(2));
     FightScreen::getInstance()->swapEntities(0,4);
     FightScreen::getInstance()->turn();
 //    sf::View testView;

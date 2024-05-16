@@ -163,6 +163,14 @@ add_executable(${PROJECT_NAME}
         include/Graphics/Animation.h
         src/Entity/EnemyAI.cpp
         include/Entity/EnemyAI.h
+        src/Entity/Entities/Knight.cpp
+        include/Entity/Entities/Knight.h
+        src/Entity/Entities/Skeleton.cpp
+        include/Entity/Entities/Skeleton.h
+        src/Entity/Entities/Rogue.cpp
+        include/Entity/Entities/Rogue.h
+        src/Entity/EntityFactory.cpp
+        include/Entity/EntityFactory.h
 )
 
 ###############################################################################

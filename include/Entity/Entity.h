@@ -14,7 +14,7 @@
 #include "../Graphics/Animation.h"
 
 class Entity {
-private:
+protected:
     Animation<sf::RectangleShape> sprite;
     std::string name;
     std::string textureName;
@@ -28,10 +28,6 @@ private:
 public:
 
     Entity();
-
-    /// creates a entity corresponding to the internal id info
-    /// @param id id of the entity;
-    explicit Entity(int id);
 
     Entity(const Entity& entity);
 
