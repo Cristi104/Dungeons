@@ -9,6 +9,7 @@ FightScreen* FightScreen::singleton = nullptr;
 
 FightScreen::FightScreen() :Panel() {
     this->selectedEntity = 3;
+    this->font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf");
     this->selectedMove = 0;
     this->entities = new Entity*[8];
     for(int i = 0; i < 8; i++)
@@ -99,7 +100,7 @@ void FightScreen::addEntity(Entity* entity) {
     this->entities[index] = entity;
     if(index < 4)
         this->characterPanel[index] = new CharacterPanel(entity);
-    entity->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index));
+    entity->getSprite().getSprite()->setPosition(FightScreen::getCoordsOfIndex(index));
 }
 
 void FightScreen::swapEntities(int index1, int index2) {
@@ -112,9 +113,9 @@ void FightScreen::swapEntities(int index1, int index2) {
         this->characterPanel[index1] = aux;
     }
     if(this->entities[index1])
-        this->entities[index1]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index1));
+        this->entities[index1]->getSprite().getSprite()->setPosition(FightScreen::getCoordsOfIndex(index1));
     if(this->entities[index2])
-        this->entities[index2]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(index2));
+        this->entities[index2]->getSprite().getSprite()->setPosition(FightScreen::getCoordsOfIndex(index2));
 }
 
 void FightScreen::deleteEntity(int index) {
@@ -134,8 +135,9 @@ void FightScreen::deleteEntity(int index) {
 void FightScreen::draw(sf::RenderWindow &window) {
     for(int i = 0; i < 8; i++)
         if(entities[i] != nullptr){
-            entities[i]->getRectangleShape().setPosition(FightScreen::getCoordsOfIndex(i));
-            window.draw(entities[i]->getRectangleShape());
+//            entities[i]->getSprite().getSprite().setPosition(FightScreen::getCoordsOfIndex(i));
+//            window.draw(entities[i]->getSprite());
+            this->entities[i]->getSprite().draw(window);
         }
     for(int i = 0; i < 8; i++){
         if(this->selectedMove >= 1 && this->selectedMove <= 4)
@@ -148,6 +150,14 @@ void FightScreen::draw(sf::RenderWindow &window) {
             this->getComponent(i+16)->draw(window);
             this->getComponent(i+24)->getRectangleShape().setScale({(float)this->entities[i]->getHealth()/ (float)this->entities[i]->getMaxHealth(),1});
             this->getComponent(i+24)->draw(window);
+        }
+    }
+    for(int i =0; i < (int)this->animations.size(); i++){
+        this->animations[i]->draw(window);
+        if(static_cast<Animation<sf::Text>*>(this->animations[i])->isDone()){
+            delete this->animations[i];
+            this->animations.erase(this->animations.begin() + i);
+            i--;
         }
     }
     this->mapPanel->draw(window);
@@ -222,12 +232,11 @@ int FightScreen::handleEvent(const sf::Event &event) {
                     continue;
                 if(move->isAoe()){
                     for(int j = 0; j < 8; j++){
-                        if(FightScreen::getPosition(j) & move->getRange()){
-                            this->entities[j]->getHit(*move);
-                        }
+                        if(FightScreen::getPosition(j) & move->getRange())
+                            this->hit(move,j);
                     }
                 } else
-                    this->entities[i]->getHit(*move);
+                    this->hit(move, i);
                 this->endEntityTurn();
                 return true;
             }
@@ -265,6 +274,7 @@ void FightScreen::turn() {
 }
 
 void FightScreen::endEntityTurn() {
+    this->entities[turnOrder.top()]->getSprite().reset();
     this->turnOrder.pop();
     this->selectedMove = 0;
     this->turn();
@@ -277,4 +287,67 @@ void FightScreen::endEntityTurn() {
 
 Positions FightScreen::getPosition(int index) {
     return static_cast<Positions>(pow(2,index));
+}
+
+void FightScreen::hit(Move *move, int index) {
+    int ret = this->entities[index]->getHit(*move);
+    Animation<sf::Text>* animation;
+    std::vector<sf::Vector2f> moves = {{0,-42 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-34 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-26 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-20 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-15 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-13 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-8 * Settings::getInstance()->getScaleHeight()},
+                                       {0,-3 * Settings::getInstance()->getScaleHeight()},};
+    if(ret != -1){
+        std::cout << "ok";
+        animation = new Animation<sf::Text>(0,8,5);
+        animation->setMoves(moves);
+        animation->getSprite()->setString(std::to_string(-move->getDamage()));
+        animation->getSprite()->setCharacterSize(42);
+        animation->getSprite()->setPosition(FightScreen::getCoordsOfIndex(index)+ sf::Vector2f(30 * Settings::getInstance()->getScaleWidth(),
+                                                                                               80 * Settings::getInstance()->getScaleWidth()));
+        animation->getSprite()->setFont(this->font);
+        if(move->getDamage() > 0)
+            animation->getSprite()->setFillColor({200,45,34});
+        else
+            animation->getSprite()->setFillColor({20,195,34});
+        this->animations.push_back(animation);
+        if(ret > 0){
+            std::cout << "okk";
+            animation = new Animation<sf::Text>(0,8,5);
+            switch (move->getStatusEffect().getType()) {
+                case EffectType::SPEED:
+                    animation->getSprite()->setString("Debuf");
+                    break;
+                case EffectType::STUN:
+                    animation->getSprite()->setString("Stun");
+                    break;
+                case EffectType::BLEED:
+                    animation->getSprite()->setString("Bleed");
+                    break;
+                case EffectType::BURN:
+                    animation->getSprite()->setString("Burn");
+                    break;
+                default:
+                    break;
+            }
+            animation->setMoves(moves);
+            animation->getSprite()->setCharacterSize(42);
+            animation->getSprite()->setPosition(FightScreen::getCoordsOfIndex(index)+ sf::Vector2f(20 * Settings::getInstance()->getScaleWidth(),
+                                                                                                   110 * Settings::getInstance()->getScaleWidth()));
+            animation->getSprite()->setFont(this->font);
+            this->animations.push_back(animation);
+        } else{
+            animation = new Animation<sf::Text>(0,8,5);
+            animation->setMoves(moves);
+            animation->getSprite()->setString("Miss");
+            animation->getSprite()->setCharacterSize(42);
+            animation->getSprite()->setPosition(FightScreen::getCoordsOfIndex(index)+ sf::Vector2f(30 * Settings::getInstance()->getScaleWidth(),
+                                                                                                   80 * Settings::getInstance()->getScaleWidth()));
+            animation->getSprite()->setFont(this->font);
+        }
+
+    }
 }

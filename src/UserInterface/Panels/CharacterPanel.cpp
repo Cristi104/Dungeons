@@ -75,7 +75,7 @@ CharacterPanel::CharacterPanel(Entity *entity) :Panel(){
         this->addComponent(label);
     }
     auto* component = new Component;
-    component->getRectangleShape().setTexture(entity->getRectangleShape().getTexture());
+    component->getRectangleShape().setTexture(entity->getSprite().getSprite()->getTexture());
     component->getRectangleShape().setSize({120 * Settings::getInstance()->getScaleWidth(),
                                             200 * Settings::getInstance()->getScaleHeight()});
     component->addPosition<sf::Vector2f>({30 * Settings::getInstance()->getScaleWidth(), 470 * Settings::getInstance()->getScaleHeight()});

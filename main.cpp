@@ -121,16 +121,16 @@ int main(){
 ////    sprite.setTexture(*GameWindow::getTexture("None"));
 ////    sprite.setSize({1280, 720});
 ////    Button component;
-////    component.getRectangleShape().setTexture(*GameWindow::getTexture("Skip"));
-////    component.getRectangleShape().setSize({100, 100});
+////    component.getSprite().setTexture(*GameWindow::getTexture("Skip"));
+////    component.getSprite().setSize({100, 100});
 ////    sf::RectangleShape sprite;
 ////    sprite.setTexture(GameWindow::getTexture("None"));
 ////    sprite.setSize({100, 100});
 ////    testPanel.toggleVisibility();
 ////    Component* component = new Component;
 ////    testPanel.addComponent(component);
-////    testPanel.getComponent(0)->getRectangleShape().setTexture(GameWindow::getTexture("Skip"));
-////    testPanel.getComponent(0)->getRectangleShape().setSize({100, 100});
+////    testPanel.getComponent(0)->getSprite().setTexture(GameWindow::getTexture("Skip"));
+////    testPanel.getComponent(0)->getSprite().setSize({100, 100});
 //    Entity testEntity;
 //    Map map;
 //    map.getSprite().setSize({500, 500});
@@ -184,7 +184,7 @@ int main(){
 //
 ////        testPanel.addComponent(Label("Test text pentru Panel class"));
 ////        testPanel.addComponent(Component());
-////        testPanel.getComponent(2).getRectangleShape().setTexture(GameWindow::getTexture("test"));
+////        testPanel.getComponent(2).getSprite().setTexture(GameWindow::getTexture("test"));
 ////        testPanel.draw(window.getWindow());
 //        window.getWindow().display();
 //    }

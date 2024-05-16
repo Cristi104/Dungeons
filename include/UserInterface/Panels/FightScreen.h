@@ -18,6 +18,8 @@ private:
     CharacterPanel** characterPanel;
     Panel* mapPanel;
     Map* currentMap;
+    std::vector<Drawn*> animations;
+    sf::Font font;
 
     /// conversion from position to int
     /// undefined behaviour if position is not a simple position (power of 2)
@@ -29,6 +31,8 @@ private:
     /// conversion from entity index to screen coordinates
     /// @return top left corner coordinates
     static sf::Vector2f getCoordsOfIndex(int index);
+
+    void hit(Move* move, int index);
 
     FightScreen();
 public:

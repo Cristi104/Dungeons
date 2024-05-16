@@ -7,7 +7,7 @@ template<class T>
 class Animation : public Drawn{
 private:
     T* sprite;
-    std::vector<sf::Vector2i> moves;
+    std::vector<sf::Vector2f> moves;
     std::vector<sf::Vector2f> scale;
     int step{};
     int delay{};
@@ -20,22 +20,36 @@ public:
     /// @param length length of animation in frames
     /// @param step first time starting frame if this is a negative value the animation will not be played until reset
     /// @param delay amount of frames each animation frame will be played for
-    explicit Animation(int step = 0, int length = 1, int delay = 1);
+    explicit Animation(int step = 0, int length = 1, int delay = 15);
 
-    virtual ~Animation();
+    ~Animation() override;
 
-    T& getSprite();
+    T* getSprite();
+
+    void setDelay(int i);
 
     /// sets the animation frames scaling each frame the scale will be set to the according value
     void setScale(const std::vector<sf::Vector2f> &vector);
 
     /// sets the animation frames moves each game the sprite will move according to the value
-    void setMoves(const std::vector<sf::Vector2i> &vector);
+    void setMoves(const std::vector<sf::Vector2f> &vector);
 
     void draw(sf::RenderWindow& window) override;
 
     void reset();
+
+    bool isDone();
 };
+
+template<class T>
+bool Animation<T>::isDone() {
+    return this->step == -1;
+}
+
+template<class T>
+void Animation<T>::setDelay(int i) {
+    Animation::delay = i;
+}
 
 template<class T>
 void Animation<T>::reset() {
@@ -43,7 +57,7 @@ void Animation<T>::reset() {
 }
 
 template<class T>
-void Animation<T>::setMoves(const std::vector<sf::Vector2i> &vector){
+void Animation<T>::setMoves(const std::vector<sf::Vector2f> &vector){
     Animation::moves = vector;
 }
 
@@ -58,8 +72,8 @@ Animation<T>::~Animation() {
 }
 
 template<class T>
-T &Animation<T>::getSprite() {
-    return *(this->sprite);
+T* Animation<T>::getSprite() {
+    return this->sprite;
 }
 
 template<class T>
@@ -72,19 +86,21 @@ Animation<T>::Animation(int step, int length, int delay) {
         this->step = -1;
     if(length <= 0)
         length = 1;
-    this->moves = std::vector<sf::Vector2i>(length,{0,0});
+    this->moves = std::vector<sf::Vector2f>(length,{0,0});
     this->scale = std::vector<sf::Vector2f>(length,{1,1});
     this->delay = delay;
 }
 
 template<class T>
 void Animation<T>::draw(sf::RenderWindow &window) {
-    if(this->step == (int)this->moves.size() * this->delay)
+    if((this->step >= (int)this->moves.size() * this->delay))// && (this->step >= (int)this->scale.size() * this->delay))
         this->step = -1;
     if(this->step >= 0){
         if(this->step % this->delay == 0){
-            this->addPosition<sf::Vector2i>(this->moves[step / this->delay]);
-            this->sprite->setScale(this->scale[step / this->delay]);
+            if(this->step < (int)this->moves.size() * this->delay)
+                this->addPosition<sf::Vector2f>(this->moves[step / this->delay]);
+            if(this->step < (int)this->scale.size() * this->delay)
+                this->sprite->setScale(this->scale[step / this->delay]);
         }
         this->step++;
     }

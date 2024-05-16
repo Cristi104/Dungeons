@@ -11,10 +11,11 @@
 #include "Stats.h"
 #include "StatusEffect.h"
 #include "Move.h"
+#include "../Graphics/Animation.h"
 
 class Entity {
 private:
-    sf::RectangleShape sprite;
+    Animation<sf::RectangleShape> sprite;
     std::string name;
     std::string textureName;
     Stats stats;
@@ -38,19 +39,19 @@ public:
 
     ~Entity();
 
-    sf::RectangleShape& getRectangleShape();
+    Animation<sf::RectangleShape>& getSprite();
 
-    const Stats &getStats() const;
+    [[nodiscard]] const Stats &getStats() const;
 
-    Move *getMoves() const;
+    [[nodiscard]] Move *getMoves() const;
 
-    int getHealth() const;
+    [[nodiscard]] int getHealth() const;
 
-    int getMaxHealth() const;
+    [[nodiscard]] int getMaxHealth() const;
 
-    const std::string &getName() const;
+    [[nodiscard]] const std::string &getName() const;
 
-    const std::string &getTextureName() const;
+    [[nodiscard]] const std::string &getTextureName() const;
 
     /// serializes the entity object
     friend std::ostream& operator<<(std::ostream& out, const Entity& entity);
@@ -65,12 +66,15 @@ public:
     void removeStatusEffect(int index);
 
     /// applies the effect of a move on the entity
-    void getHit(const Move& move);
+    /// @return -1 if the move was dodged;
+    /// @return 0 if the damage is applied
+    /// @return EffectType if the status effect was applied
+    int getHit(const Move& move);
 
     /// decrements and deletes the StatusEffects applied to the entity every turn
     void turn();
 
-    int getPosition() const;
+    [[nodiscard]] int getPosition() const;
 };
 
 #endif //OOP_ENTITY_H

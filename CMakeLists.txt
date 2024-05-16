@@ -161,6 +161,8 @@ add_executable(${PROJECT_NAME}
         include/UserInterface/Panels/CharacterPanel.h
         src/Graphics/Animation.cpp
         include/Graphics/Animation.h
+        src/Entity/EnemyAI.cpp
+        include/Entity/EnemyAI.h
 )
 
 ###############################################################################

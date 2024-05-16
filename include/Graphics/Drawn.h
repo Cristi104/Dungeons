@@ -13,6 +13,8 @@ public:
     /// @param window draw target
     virtual void draw(sf::RenderWindow& window) = 0;
 
+    virtual ~Drawn() = default;
+
     /// adds the position vector to all components included in the object
     /// @tparam T a type of vector with x and y coordinates
     /// @param position vector to be added

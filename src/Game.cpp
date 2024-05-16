@@ -11,15 +11,17 @@ Game::Game() {
 int Game::start() {
     FightScreen::getInstance()->addEntity(new Entity(0));
     FightScreen::getInstance()->swapEntities(0,3);
+    FightScreen::getInstance()->addEntity(new Entity(2));
+    FightScreen::getInstance()->swapEntities(0,4);
     FightScreen::getInstance()->turn();
 //    sf::View testView;
 
 //    testView.reset({0,0,1200,700});
 //    testView.setViewport({0,0,0.5,1});
-    Animation<sf::RectangleShape> testAnimation(0,5,20);
-    testAnimation.setMoves({{10, 10},{10,10},{10,10},{10,10},{10,10}});
-    testAnimation.getSprite().setTexture(GameWindow::getTexture("None"));
-    testAnimation.getSprite().setSize({100,100});
+//    Entity entity(0);
+//    entity.getSprite().setMoves({{10, 10}, {10, 10}, {10, 10}, {10, 10}, {10, 10}});
+//    entity.getSprite().getSprite().setTexture(GameWindow::getTexture("None"));
+//    entity.getSprite().getSprite().setSize({100, 100});
     while(this->window->getWindow().isOpen() && running){
         sf::Event event{};
         while(this->window->getWindow().pollEvent(event)){
@@ -41,7 +43,7 @@ int Game::start() {
 //        window->getWindow().setView(testView);
         FightScreen::getInstance()->draw(this->window->getWindow());
 //        window->getWindow().setView(window->getWindow().getDefaultView());
-        testAnimation.draw(this->window->getWindow());
+//        entity.getSprite().draw(this->window->getWindow());
         this->window->getWindow().display();
     }
     GameWindow::freeTextures();
