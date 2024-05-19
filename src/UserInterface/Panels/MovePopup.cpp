@@ -16,7 +16,7 @@ MovePopup::MovePopup(const Move *move) : PopupPanel(){
     component->addPosition<sf::Vector2f>({(64 + 16) * Settings::getInstance()->getScaleWidth(), 8  * Settings::getInstance()->getScaleHeight()});
     this->addComponent(component);
     if(move->isAoe()){
-        if(move->getRange() >= 16){
+        if(move->getRange().getValue() >= 16){
             component = new Component;
             component->getRectangleShape().setTexture(GameWindow::getTexture("EnemyPosAoe"));
             component->setPriority(2);
@@ -34,7 +34,7 @@ MovePopup::MovePopup(const Move *move) : PopupPanel(){
             this->addComponent(component);
         }
     } else {
-        auto sum = static_cast<Positions>(move->getRange() | move->getCastPosition());
+        int sum = move->getRange().getValue() | move->getCastPosition().getValue();
 //        auto sum = static_cast<Positions>(256-1);
         for(int i = 0; i < 8; i++){
             if(sum & (int)pow(2,i)) {

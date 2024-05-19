@@ -22,7 +22,7 @@ Move::Move(const Move& move) {
 Move& Move::operator=(const Move& move) = default;
 
 std::ostream& operator<<(std::ostream& out, const Move& move) {
-    out << move.name << '\n' << static_cast<int>(move.castPosition) << ' ' << static_cast<int>(move.range) << ' ' << move.accuracy << ' ' << move.damage << ' ' << move.statusEffect << move.aoe << '\n';
+    out << move.name << '\n' << move.castPosition.getValue() << ' ' << move.range.getValue() << ' ' << move.accuracy << ' ' << move.damage << ' ' << move.statusEffect << move.aoe << '\n';
     return out;
 }
 

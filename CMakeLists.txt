@@ -171,6 +171,7 @@ add_executable(${PROJECT_NAME}
         include/Entity/Entities/Rogue.h
         src/Entity/EntityFactory.cpp
         include/Entity/EntityFactory.h
+        src/Entity/Positions.cpp
 )
 
 ###############################################################################

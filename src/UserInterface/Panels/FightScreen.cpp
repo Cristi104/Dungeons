@@ -77,13 +77,6 @@ FightScreen::~FightScreen() {
     delete this->currentMap;
 }
 
-int FightScreen::getIndex(Positions position) {
-    int x = static_cast<int>(position);
-    int i;
-    for(i = 0; x != 1; i++)x /= 2;
-    return i;
-}
-
 sf::Vector2f FightScreen::getCoordsOfIndex(int index) {
     sf::Vector2f position;
     position.y = 200 * Settings::getInstance()->getScaleHeight();
@@ -141,7 +134,7 @@ void FightScreen::draw(sf::RenderWindow &window) {
         }
     for(int i = 0; i < 8; i++){
         if(this->selectedMove >= 1 && this->selectedMove <= 4)
-            if((int)this->entities[turnOrder.top()]->getMoves()[this->selectedMove-1].getRange() & (int)FightScreen::getPosition(i) &&
+            if(this->entities[turnOrder.top()]->getMoves()[this->selectedMove-1].getRange().getValue() & (int)pow(2,i) &&
                     this->entities[i] != nullptr)
                 this->getComponent(i + 8)->draw(window);
     }
@@ -183,26 +176,26 @@ int FightScreen::handleEvent(const sf::Event &event) {
         return 0;
     if(event.type == sf::Event::KeyPressed){
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) &&
-           (FightScreen::getPosition(turnOrder.top()) &
-            this->entities[turnOrder.top()]->getMoves()[0].getCastPosition())){
+           ((int)pow(2, turnOrder.top()) &
+            this->entities[turnOrder.top()]->getMoves()[0].getCastPosition().getValue())){
             this->selectedMove = 1;
             return 1;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) &&
-           (FightScreen::getPosition(turnOrder.top()) &
-            this->entities[turnOrder.top()]->getMoves()[1].getCastPosition())){
+           ((int)pow(2, turnOrder.top()) &
+            this->entities[turnOrder.top()]->getMoves()[1].getCastPosition().getValue())){
             this->selectedMove = 2;
             return 2;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) &&
-           (FightScreen::getPosition(turnOrder.top()) &
-            this->entities[turnOrder.top()]->getMoves()[2].getCastPosition())){
+           ((int)pow(2, turnOrder.top()) &
+            this->entities[turnOrder.top()]->getMoves()[2].getCastPosition().getValue())){
             this->selectedMove = 3;
             return 3;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) &&
-           (FightScreen::getPosition(turnOrder.top()) &
-            this->entities[turnOrder.top()]->getMoves()[3].getCastPosition())){
+           ((int)pow(2, turnOrder.top()) &
+            this->entities[turnOrder.top()]->getMoves()[3].getCastPosition().getValue())){
             this->selectedMove = 4;
             return 4;
         }
@@ -228,11 +221,11 @@ int FightScreen::handleEvent(const sf::Event &event) {
                     continue;
                 if (!handler->handleEvent(event))
                     continue;
-                if (!(move->getRange() & getPosition(i)))
+                if (!(move->getRange().getValue() & (int)pow(2, i)))
                     continue;
                 if(move->isAoe()){
                     for(int j = 0; j < 8; j++){
-                        if(FightScreen::getPosition(j) & move->getRange())
+                        if((int)pow(2, j) & move->getRange().getValue())
                             this->hit(move,j);
                     }
                 } else
@@ -282,11 +275,6 @@ void FightScreen::endEntityTurn() {
     if(this->turnOrder.top() < 4){
         this->characterPanel[turnOrder.top()]->update();
     }
-//    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-}
-
-Positions FightScreen::getPosition(int index) {
-    return static_cast<Positions>(pow(2,index));
 }
 
 void FightScreen::hit(Move *move, int index) {

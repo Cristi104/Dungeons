@@ -49,6 +49,6 @@ sf::Vector2i Skeleton::getAttack(Entity** fight) {
     } else {
         move.x = 1;
     }
-    if(!(this->position & this->moves[move.x].getCastPosition()))
+    if(!(this->position & this->moves[move.x].getCastPosition().getIndex()))
         move.x = 2;
 }

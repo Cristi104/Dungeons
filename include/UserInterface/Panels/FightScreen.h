@@ -21,13 +21,6 @@ private:
     std::vector<Drawn*> animations;
     sf::Font font;
 
-    /// conversion from position to int
-    /// undefined behaviour if position is not a simple position (power of 2)
-    static int getIndex(Positions position);
-
-    /// conversion from int to position
-    static Positions getPosition(int index);
-
     /// conversion from entity index to screen coordinates
     /// @return top left corner coordinates
     static sf::Vector2f getCoordsOfIndex(int index);

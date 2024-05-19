@@ -66,7 +66,7 @@ std::ostream& operator<<(std::ostream& out, const Entity& entity) {
 std::istream& operator>>(std::istream& in, Entity& entity) {
     int x;
     in >> entity.name >> entity.textureName >> entity.stats >> entity.health >> entity.maxHealth >> x;
-    entity.position = static_cast<Positions>(x);
+    entity.position = x;
     in >> x;
     entity.statusEffects.resize(x);
     for(StatusEffect& effect : entity.statusEffects)
