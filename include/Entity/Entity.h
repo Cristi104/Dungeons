@@ -33,7 +33,7 @@ public:
 
     Entity& operator=(const Entity& entity);
 
-    ~Entity();
+    virtual ~Entity();
 
     Animation<sf::RectangleShape>& getSprite();
 

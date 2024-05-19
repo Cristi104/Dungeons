@@ -7,12 +7,14 @@
 
 
 #include "../Entity.h"
+#include "../EnemyAI.h"
 
-class Skeleton : public Entity{
+class Skeleton : public Entity , public EnemyAI{
 
 public:
     Skeleton();
 
+    sf::Vector2i getAttack(Entity** fight) override;
 };
 
 
