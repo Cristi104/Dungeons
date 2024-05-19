@@ -20,6 +20,7 @@ private:
     Map* currentMap;
     std::vector<Drawn*> animations;
     sf::Font font;
+    int delay;
 
     /// conversion from entity index to screen coordinates
     /// @return top left corner coordinates

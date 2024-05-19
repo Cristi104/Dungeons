@@ -4,10 +4,12 @@
 #include "../../../include/UserInterface/Panels/FightScreen.h"
 #include "../../../include/UserInterface/Border.h"
 #include "../../../include/UserInterface/Panels/MapPanel.h"
+#include "../../../include/Entity/EnemyAI.h"
 
 FightScreen* FightScreen::singleton = nullptr;
 
 FightScreen::FightScreen() :Panel() {
+    this->delay = 80;
     this->selectedEntity = 3;
     this->font.loadFromFile("../res/fonts/8bitOperatorPlus8-Regular.ttf");
     this->selectedMove = 0;
@@ -105,10 +107,14 @@ void FightScreen::swapEntities(int index1, int index2) {
         this->characterPanel[index2] = this->characterPanel[index1];
         this->characterPanel[index1] = aux;
     }
-    if(this->entities[index1])
+    if(this->entities[index1]){
         this->entities[index1]->getSprite().getSprite()->setPosition(FightScreen::getCoordsOfIndex(index1));
-    if(this->entities[index2])
+        this->entities[index1]->setPosition(index1);
+    }
+    if(this->entities[index2]){
         this->entities[index2]->getSprite().getSprite()->setPosition(FightScreen::getCoordsOfIndex(index2));
+        this->entities[index2]->setPosition(index2);
+    }
 }
 
 void FightScreen::deleteEntity(int index) {
@@ -126,6 +132,7 @@ void FightScreen::deleteEntity(int index) {
 }
 
 void FightScreen::draw(sf::RenderWindow &window) {
+    this->delay--;
     for(int i = 0; i < 8; i++)
         if(entities[i] != nullptr){
 //            entities[i]->getSprite().getSprite().setPosition(FightScreen::getCoordsOfIndex(i));
@@ -152,6 +159,12 @@ void FightScreen::draw(sf::RenderWindow &window) {
             this->animations.erase(this->animations.begin() + i);
             i--;
         }
+    }
+    if(this->animations.empty() && this->turnOrder.top() >= 4 && this->delay <= 0){
+        sf::Vector2i move = dynamic_cast<EnemyAI*>(this->entities[this->turnOrder.top()])->getAttack(this->entities);
+        this->hit(&this->entities[turnOrder.top()]->getMoves()[move.x],move.y);
+        this->entities[turnOrder.top()]->getSprite().reset();
+        this->endEntityTurn();
     }
     this->mapPanel->draw(window);
     if(this->characterPanel[this->selectedEntity])
@@ -209,7 +222,7 @@ int FightScreen::handleEvent(const sf::Event &event) {
             return 6;
         }
     }
-    if(event.type == sf::Event::MouseButtonPressed){
+    if(event.type == sf::Event::MouseButtonPressed && this->delay <= 0){
         if(this->selectedMove == 0)
             return 0;
         Move* move;
@@ -267,18 +280,26 @@ void FightScreen::turn() {
 }
 
 void FightScreen::endEntityTurn() {
-    this->entities[turnOrder.top()]->getSprite().reset();
+    if(this->entities[turnOrder.top()])
+        this->entities[turnOrder.top()]->getSprite().reset();
     this->turnOrder.pop();
     this->selectedMove = 0;
     this->turn();
+    if(!this->entities[turnOrder.top()])
+        this->endEntityTurn();
     this->entities[turnOrder.top()]->turn();
+    if(!this->entities[turnOrder.top()])
+        this->endEntityTurn();
     if(this->turnOrder.top() < 4){
         this->characterPanel[turnOrder.top()]->update();
     }
 }
 
 void FightScreen::hit(Move *move, int index) {
-    int ret = this->entities[index]->getHit(*move);
+    this->delay = 80;
+    int ret = -1;
+    if(this->entities[index])
+        ret = this->entities[index]->getHit(*move);
     Animation<sf::Text>* animation;
     std::vector<sf::Vector2f> moves = {{0,-42 * Settings::getInstance()->getScaleHeight()},
                                        {0,-34 * Settings::getInstance()->getScaleHeight()},
@@ -327,15 +348,18 @@ void FightScreen::hit(Move *move, int index) {
                                                                                                    110 * Settings::getInstance()->getScaleWidth()));
             animation->getSprite()->setFont(this->font);
             this->animations.push_back(animation);
-        } else{
-            animation = new Animation<sf::Text>(0,8,5);
-            animation->setMoves(moves);
-            animation->getSprite()->setString("Miss");
-            animation->getSprite()->setCharacterSize(42);
-            animation->getSprite()->setPosition(FightScreen::getCoordsOfIndex(index)+ sf::Vector2f(30 * Settings::getInstance()->getScaleWidth(),
-                                                                                                   80 * Settings::getInstance()->getScaleWidth()));
-            animation->getSprite()->setFont(this->font);
         }
-
+    } else{
+        animation = new Animation<sf::Text>(0,8,5);
+        animation->setMoves(moves);
+        animation->getSprite()->setString("Miss");
+        animation->getSprite()->setCharacterSize(42);
+        animation->getSprite()->setPosition(FightScreen::getCoordsOfIndex(index)+ sf::Vector2f(30 * Settings::getInstance()->getScaleWidth(),
+                                                                                               80 * Settings::getInstance()->getScaleWidth()));
+        animation->getSprite()->setFont(this->font);
+        this->animations.push_back(animation);
     }
+    if(this->entities[index])
+        if(this->entities[index]->getHealth() <= 0)
+            this->deleteEntity(index);
 }

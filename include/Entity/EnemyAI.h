@@ -4,12 +4,12 @@
 #include "Entity.h"
 
 class EnemyAI {
-private:
-
-    void update(Entity** fight, int currentPosition);
 
 protected:
     float aggressiveness;
+
+    void update(Entity** fight, int currentPosition);
+
 public:
 
     EnemyAI();

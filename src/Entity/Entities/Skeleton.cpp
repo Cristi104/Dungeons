@@ -7,18 +7,18 @@
 #include "../../../include/Graphics/GameWindow.h"
 
 Skeleton::Skeleton() : Entity(){
-    this->sprite.setMoves({{15 * Settings::getInstance()->getScaleWidth(), 0},
-                           {12 * Settings::getInstance()->getScaleWidth(), 0},
-                           {10 * Settings::getInstance()->getScaleWidth(), 0},
-                           {7 * Settings::getInstance()->getScaleWidth(), 0},
-                           {4 * Settings::getInstance()->getScaleWidth(), 0},
-                           {2 * Settings::getInstance()->getScaleWidth(), 0},
-                           {-6 * Settings::getInstance()->getScaleWidth(), 0},
-                           {-8 * Settings::getInstance()->getScaleWidth(), 0},
-                           {-11 * Settings::getInstance()->getScaleWidth(), 0},
-                           {-25 * Settings::getInstance()->getScaleWidth(), 0}});
+    this->sprite.setMoves({{-15 * Settings::getInstance()->getScaleWidth(), 0},
+                           {-12 * Settings::getInstance()->getScaleWidth(), 0},
+                           {-10 * Settings::getInstance()->getScaleWidth(), 0},
+                           {-7 * Settings::getInstance()->getScaleWidth(), 0},
+                           {-4 * Settings::getInstance()->getScaleWidth(), 0},
+                           {-2 * Settings::getInstance()->getScaleWidth(), 0},
+                           {6 * Settings::getInstance()->getScaleWidth(), 0},
+                           {8 * Settings::getInstance()->getScaleWidth(), 0},
+                           {11 * Settings::getInstance()->getScaleWidth(), 0},
+                           {25 * Settings::getInstance()->getScaleWidth(), 0}});
     this->position = 0;
-    this->health = 10;
+    this->health = 20;
     this->maxHealth = 20;
     this->moves[0] = Move("Shield Bash",
                           static_cast<Positions>(Positions::FRONTENEMY2 | Positions::FRONTENEMY1),
@@ -40,6 +40,7 @@ Skeleton::Skeleton() : Entity(){
 }
 
 sf::Vector2i Skeleton::getAttack(Entity** fight) {
+    this->update(fight, this->position);
     sf::Vector2i move;
     std::random_device device;
     std::mt19937 gen(device());
@@ -49,6 +50,25 @@ sf::Vector2i Skeleton::getAttack(Entity** fight) {
     } else {
         move.x = 1;
     }
-    if(!(this->position & this->moves[move.x].getCastPosition().getIndex()))
+    int min = 100;
+    for(int i = 1; i < 128; i*=2){
+        if(fight[Positions(i).getIndex()] && this->moves[move.x].getRange().getValue() & i && (random(gen) < 0 || min == 100)){
+            if(fight[Positions(i).getIndex()]->getHealth() < min){
+                move.y = Positions(i).getIndex();
+                min = fight[Positions(i).getIndex()]->getHealth();
+            }
+        }
+    }
+    if(!(this->position & this->moves[move.x].getCastPosition().getIndex()) || min == 100){
         move.x = 2;
+        for(int i = 1; i < 128; i*=2){
+            if(fight[Positions(i).getIndex()] && this->moves[move.x].getRange().getValue() & i && (random(gen) < 0 || min == 100)){
+                if(fight[Positions(i).getIndex()]->getHealth() < min){
+                    move.y = Positions(i).getIndex();
+                    min = fight[Positions(i).getIndex()]->getHealth();
+                }
+            }
+        }
+    }
+    return move;
 }

@@ -147,3 +147,7 @@ const std::string &Entity::getName() const {
 const std::string &Entity::getTextureName() const {
     return textureName;
 }
+
+void Entity::setPosition(int position) {
+    Entity::position = position;
+}

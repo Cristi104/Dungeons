@@ -49,6 +49,8 @@ public:
 
     [[nodiscard]] const std::string &getTextureName() const;
 
+    void setPosition(int position);
+
     /// serializes the entity object
     friend std::ostream& operator<<(std::ostream& out, const Entity& entity);
 
