@@ -1,7 +1,8 @@
 #include "../include/Game.h"
 #include "../include/UserInterface/Panels/FightScreen.h"
 #include "../include/Graphics/Animation.h"
-#include "../include/Entity/EntityFactory.h"
+#include "../include/Entity/EnemyFactory.h"
+#include "../include/Entity/AllyFactory.h"
 
 Game::Game() {
     this->panels.reserve(5);
@@ -10,11 +11,17 @@ Game::Game() {
 }
 
 int Game::start() {
-    EntityFactory factory;
-    FightScreen::getInstance()->addEntity(factory.createEntity(0));
+    EnemyFactory factoryE;
+    AllyFactory factoryA;
+    Entity* entity = factoryA.createEntity(0);
+    FightScreen::getInstance()->addEntity(entity);
     FightScreen::getInstance()->swapEntities(0,3);
-    FightScreen::getInstance()->addEntity(factory.createEntity(2));
-    FightScreen::getInstance()->swapEntities(0,4);
+    FightScreen::getInstance()->addEntity(factoryA.createEntity(1));
+    FightScreen::getInstance()->swapEntities(0,2);
+    FightScreen::getInstance()->addEntity(factoryE.createEntity(0));
+    FightScreen::getInstance()->swapEntities(7,4);
+    FightScreen::getInstance()->addEntity(factoryE.createEntity(1));
+    FightScreen::getInstance()->swapEntities(7,5);
     FightScreen::getInstance()->turn();
 //    sf::View testView;
 
@@ -28,9 +35,10 @@ int Game::start() {
         sf::Event event{};
         while(this->window->getWindow().pollEvent(event)){
             bool wasHandled = false;
-            if(FightScreen::getInstance()->handleEvent(event)){
-                wasHandled = true;
-            }
+            if(!FightScreen::getInstance()->isDone())
+                if(FightScreen::getInstance()->handleEvent(event)){
+                    wasHandled = true;
+                }
             for(int i = 0; i < (int)this->panels.size() && !wasHandled; i++) {
                 if (panels[i]->handleEvent(event)) {
                     wasHandled = true;
@@ -43,7 +51,8 @@ int Game::start() {
         }
         this->window->getWindow().clear();
 //        window->getWindow().setView(testView);
-        FightScreen::getInstance()->draw(this->window->getWindow());
+        if(!FightScreen::getInstance()->isDone())
+            FightScreen::getInstance()->draw(this->window->getWindow());
 //        window->getWindow().setView(window->getWindow().getDefaultView());
 //        entity.getSprite().draw(this->window->getWindow());
         this->window->getWindow().display();

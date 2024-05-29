@@ -1,12 +1,12 @@
 //
-// Created by cristi on 16.05.2024.
+// Created by cristi on 26.05.2024.
 //
 
+#include "../../../include/Entity/Entities/Spearman.h"
 #include <random>
-#include "../../../include/Entity/Entities/Skeleton.h"
 #include "../../../include/Graphics/GameWindow.h"
 
-Skeleton::Skeleton() : Entity(){
+Spearman::Spearman() : Entity(){
     this->sprite.setMoves({{-15 * Settings::getInstance()->getScaleWidth(), 0},
                            {-12 * Settings::getInstance()->getScaleWidth(), 0},
                            {-10 * Settings::getInstance()->getScaleWidth(), 0},
@@ -18,8 +18,8 @@ Skeleton::Skeleton() : Entity(){
                            {11 * Settings::getInstance()->getScaleWidth(), 0},
                            {25 * Settings::getInstance()->getScaleWidth(), 0}});
     this->position = 7;
-    this->health = 10;
-    this->maxHealth = 10;
+    this->health = 15;
+    this->maxHealth = 15;
     this->moves[0] = Move("Shield Bash",
                           static_cast<Positions>(Positions::FRONTENEMY2 | Positions::FRONTENEMY1),
                           static_cast<Positions>(Positions::FRONTALLY1 | Positions::FRONTALLY2 | Positions::BACKALLY2),
@@ -32,14 +32,14 @@ Skeleton::Skeleton() : Entity(){
                           static_cast<Positions>(Positions::FRONTENEMY2 | Positions::FRONTENEMY1 | Positions::BACKENEMY2 | Positions::BACKENEMY1),
                           static_cast<Positions>(Positions::FRONTALLY1 | Positions::FRONTALLY2),
                           80, 5);
-    this->textureName = "Skeleton";
+    this->textureName = "Spearman";
     this->name = "Skeleton";
     this->stats = Stats(2,100,50,80,10);
     this->sprite.getSprite()->setTexture(GameWindow::getTexture(this->textureName));
 
 }
 
-sf::Vector2i Skeleton::getAttack(Entity** fight) {
+sf::Vector2i Spearman::getAttack(Entity **fight) {
     this->update(fight, this->position);
     sf::Vector2i move;
     std::random_device device;

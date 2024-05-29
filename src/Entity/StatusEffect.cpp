@@ -10,7 +10,7 @@ StatusEffect::StatusEffect() {
 StatusEffect::StatusEffect(EffectType type, int duration, int chance, int value) {
     this->type = type;
     this->value = value;
-    this->duration = duration;
+    this->duration = duration + 1;
     this->chance = chance;
 }
 
@@ -32,7 +32,7 @@ int StatusEffect::getValue() const {
 }
 
 int StatusEffect::getDuration() const {
-    return duration;
+    return duration - 1;
 }
 
 int StatusEffect::getChance() const {

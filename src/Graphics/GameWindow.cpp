@@ -32,6 +32,7 @@ void GameWindow::loadTextures(const std::string &path) {
             delete texture;
             std::cout<< "Failed to load texture at " << filePath << '\n';
         } else {
+//            texture->setSmooth(true);
             textureName = filePath.substr(path.size() + 1, filePath.size()- path.size() - 1 - 4);
             GameWindow::textures.insert(std::pair<const std::string, sf::Texture*>(textureName, texture));
         }

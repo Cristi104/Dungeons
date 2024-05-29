@@ -15,12 +15,13 @@ private:
     std::stack<int> turnOrder;
     int selectedMove;
     int selectedEntity;
-    CharacterPanel** characterPanel;
+    CharacterPanel* characterPanel;
     Panel* mapPanel;
     Map* currentMap;
     std::vector<Drawn*> animations;
     sf::Font font;
     int delay;
+    bool hasEnded;
 
     /// conversion from entity index to screen coordinates
     /// @return top left corner coordinates
@@ -55,6 +56,8 @@ public:
 
     ///handles the ending of an entity's turn
     void endEntityTurn();
+
+    bool isDone() const;
 
     static FightScreen *getInstance();
 };

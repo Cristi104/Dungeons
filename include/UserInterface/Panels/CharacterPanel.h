@@ -3,16 +3,18 @@
 
 #include "Panel.h"
 #include "../../Entity/Entity.h"
+#include "../Observer.h"
 
-class CharacterPanel : public Panel{
+class CharacterPanel : public Panel , public Observer<Entity>{
 private:
-    Entity* entity;
+    static Move* swap;
+    static Move* skip;
 
 public:
 
-    explicit CharacterPanel(Entity* entity);
+    explicit CharacterPanel();
 
-    void update();
+    void update(Entity& entity) override;
 };
 
 #endif //OOP_CHARACTERPANEL_H

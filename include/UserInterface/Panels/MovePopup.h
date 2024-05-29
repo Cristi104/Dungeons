@@ -3,14 +3,15 @@
 
 #include "PopupPanel.h"
 #include "../../Entity/Move.h"
+#include "../Observer.h"
 
-class MovePopup : public PopupPanel{
+class MovePopup : public PopupPanel , public Observer<Move>{
 private:
-    const Move* move;
-
 public:
 
-    explicit MovePopup(const Move* move);
+    explicit MovePopup();
+
+    void update(Move& move) override;
 
     ~MovePopup() override = default;
 };

@@ -35,3 +35,7 @@ void PopupPanel::addPos(float x, float y) {
     Button::addPos(x, y);
     this->panel.addPosition<sf::Vector2f>({x,y});
 }
+
+Component *PopupPanel::getComponent(int id) {
+    return this->panel.getComponent(id);
+}

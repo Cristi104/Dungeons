@@ -17,7 +17,7 @@ Knight::Knight() : Entity(){
                            {-11 * Settings::getInstance()->getScaleWidth(), 0},
                            {-25 * Settings::getInstance()->getScaleWidth(), 0}});
     this->position = 0;
-    this->health = 10;
+    this->health = 20;
     this->maxHealth = 20;
     this->moves[0] = Move("Shield Bash",
                           static_cast<Positions>(Positions::FRONTALLY2),

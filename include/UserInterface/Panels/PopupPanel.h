@@ -25,6 +25,8 @@ public:
     /// adds a component to the panel
     /// @return index of the component;
     int addComponent(Component* component);
+
+    Component* getComponent(int id);
 };
 
 #endif //OOP_POPUPPANEL_H

@@ -69,6 +69,9 @@ public:
     /// @return EffectType if the status effect was applied
     int getHit(const Move& move);
 
+    /// @return true if the entity has at least one status effect of the given type
+    bool hasStatusEffect(EffectType effectType);
+
     /// decrements and deletes the StatusEffects applied to the entity every turn
     void turn();
 

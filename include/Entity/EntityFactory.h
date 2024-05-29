@@ -10,7 +10,8 @@
 
 class EntityFactory {
 public:
-    Entity* createEntity(int id);
+    virtual Entity* createEntity(int id) = 0;
+    virtual ~EntityFactory() = default;
 };
 
 

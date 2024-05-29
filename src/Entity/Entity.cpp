@@ -12,7 +12,7 @@ Entity::Entity() : sprite(-1,8,5){
     this->position = 1;
     this->statusEffects.resize(0);
     this->sprite.getSprite()->setSize({120 * Settings::getInstance()->getScaleWidth(),
-                          200 * Settings::getInstance()->getScaleHeight()});
+                          180 * Settings::getInstance()->getScaleHeight()});
 }
 
 Entity::Entity(const Entity &entity) {
@@ -87,7 +87,7 @@ void Entity::removeStatusEffect(int index) {
     this->stats.setValue(statusEffects[index].getType(),
                          this->stats.getValue(statusEffects[index].getType())
                          + statusEffects[index].getValue());
-    statusEffects.erase(std::next(statusEffects.begin(),index));
+    statusEffects.erase(statusEffects.begin() + index);
 }
 
 int Entity::getHit(const Move& move) {
@@ -95,9 +95,14 @@ int Entity::getHit(const Move& move) {
     std::mt19937 gen(device());
     std::uniform_int_distribution<> random(1,100);
     if(random(gen) - move.getAccuracy() <= 0) {
+        if(this->health <= 0)
+            if(move.getDamage() > 0)
+                if(random(gen) % 3 == 0)
+                    return -2;
         this->health = (this->health - move.getDamage() < this->maxHealth)? this->health - move.getDamage() : this->maxHealth;
+        if(this->health < 0)
+            this->health = 0;
         int statusEffectChance = move.getStatusEffect().getChance() - this->stats.getValue(move.getStatusEffect().getType());
-        std::cout << statusEffectChance;
         if(random(gen) - statusEffectChance <= 0){
             this->applyStatusEffect(move.getStatusEffect());
             return move.getStatusEffect().getType();
@@ -108,14 +113,13 @@ int Entity::getHit(const Move& move) {
 }
 
 void Entity::turn() {
-    int n = (int)this->statusEffects.size();
-    for(int i = 0; i < n;) {
+    for(int i = 0; i < (int)this->statusEffects.size();) {
         this->health -= statusEffects[i].getValue();
-        if(!statusEffects[i].decrement()){
+        if(statusEffects[i].decrement()){
             i++;
         }else{
             this->removeStatusEffect(i);
-            n--;
+            return;
         }
     }
 }
@@ -150,4 +154,12 @@ const std::string &Entity::getTextureName() const {
 
 void Entity::setPosition(int value) {
     Entity::position = value;
+}
+
+bool Entity::hasStatusEffect(EffectType effectType) {
+    for(StatusEffect& e : this->statusEffects){
+        if(e.getType() == effectType)
+            return true;
+    }
+    return false;
 }
