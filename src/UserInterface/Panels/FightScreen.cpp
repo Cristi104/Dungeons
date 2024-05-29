@@ -215,55 +215,59 @@ void FightScreen::draw(sf::RenderWindow &window) {
                 this->getComponent(i+33)->draw(window);
         }
     }
-    if(this->animations.empty() && this->delay <= 0)
-        if(this->turnOrder.top() >= 4){
+    if(this->animations.empty() && this->delay <= 0) {
+        if (this->turnOrder.top() >= 4) {
 //        std::cout << "stuned:" << this->entities[this->turnOrder.top()]->hasStatusEffect(EffectType::STUN);
-            if(this->entities[this->turnOrder.top()]->hasStatusEffect(EffectType::STUN)){
-                auto* anim = new Animation<sf::Text>(0,8,5);
+            if (this->entities[this->turnOrder.top()]->hasStatusEffect(EffectType::STUN)) {
+                auto *anim = new Animation<sf::Text>(0, 8, 5);
                 anim->getSprite()->setString("Stuned");
                 anim->getSprite()->setCharacterSize(42);
-                anim->setMoves({{0,-42 * Settings::getInstance()->getScaleHeight()},
-                                {0,-34 * Settings::getInstance()->getScaleHeight()},
-                                {0,-26 * Settings::getInstance()->getScaleHeight()},
-                                {0,-20 * Settings::getInstance()->getScaleHeight()},
-                                {0,-15 * Settings::getInstance()->getScaleHeight()},
-                                {0,-13 * Settings::getInstance()->getScaleHeight()},
-                                {0,-8 * Settings::getInstance()->getScaleHeight()},
-                                {0,-3 * Settings::getInstance()->getScaleHeight()},});
-                anim->getSprite()->setPosition(FightScreen::getCoordsOfIndex(turnOrder.top())+ sf::Vector2f(20 * Settings::getInstance()->getScaleWidth(),
-                                                                                                            80 * Settings::getInstance()->getScaleWidth()));
+                anim->setMoves({{0, -42 * Settings::getInstance()->getScaleHeight()},
+                                {0, -34 * Settings::getInstance()->getScaleHeight()},
+                                {0, -26 * Settings::getInstance()->getScaleHeight()},
+                                {0, -20 * Settings::getInstance()->getScaleHeight()},
+                                {0, -15 * Settings::getInstance()->getScaleHeight()},
+                                {0, -13 * Settings::getInstance()->getScaleHeight()},
+                                {0, -8 * Settings::getInstance()->getScaleHeight()},
+                                {0, -3 * Settings::getInstance()->getScaleHeight()},});
+                anim->getSprite()->setPosition(FightScreen::getCoordsOfIndex(turnOrder.top()) +
+                                               sf::Vector2f(20 * Settings::getInstance()->getScaleWidth(),
+                                                            80 * Settings::getInstance()->getScaleWidth()));
                 anim->getSprite()->setFont(this->font);
                 this->animations.push_back(anim);
-            }else{
-                sf::Vector2i move = dynamic_cast<EnemyAI*>(this->entities[this->turnOrder.top()])->getAttack(this->entities);
-                if(move == sf::Vector2i(-1,-1)){
+            } else {
+                sf::Vector2i move = dynamic_cast<EnemyAI *>(this->entities[this->turnOrder.top()])->getAttack(
+                        this->entities);
+                if (move == sf::Vector2i(-1, -1)) {
                     this->hasEnded = true;
                     return;
                 }
-                this->hit(&this->entities[turnOrder.top()]->getMoves()[move.x],move.y);
+                this->hit(&this->entities[turnOrder.top()]->getMoves()[move.x], move.y);
                 this->entities[turnOrder.top()]->getSprite().reset();
             }
             this->endEntityTurn();
         } else {
-            if(this->entities[turnOrder.top()]->hasStatusEffect(EffectType::STUN)){
-                auto* anim = new Animation<sf::Text>(0,8,5);
+            if (this->entities[turnOrder.top()]->hasStatusEffect(EffectType::STUN)) {
+                auto *anim = new Animation<sf::Text>(0, 8, 5);
                 anim->getSprite()->setString("Stuned");
                 anim->getSprite()->setCharacterSize(42);
-                anim->setMoves({{0,-42 * Settings::getInstance()->getScaleHeight()},
-                                {0,-34 * Settings::getInstance()->getScaleHeight()},
-                                {0,-26 * Settings::getInstance()->getScaleHeight()},
-                                {0,-20 * Settings::getInstance()->getScaleHeight()},
-                                {0,-15 * Settings::getInstance()->getScaleHeight()},
-                                {0,-13 * Settings::getInstance()->getScaleHeight()},
-                                {0,-8 * Settings::getInstance()->getScaleHeight()},
-                                {0,-3 * Settings::getInstance()->getScaleHeight()},});
-                anim->getSprite()->setPosition(FightScreen::getCoordsOfIndex(turnOrder.top())+ sf::Vector2f(20 * Settings::getInstance()->getScaleWidth(),
-                                                                                                            80 * Settings::getInstance()->getScaleWidth()));
+                anim->setMoves({{0, -42 * Settings::getInstance()->getScaleHeight()},
+                                {0, -34 * Settings::getInstance()->getScaleHeight()},
+                                {0, -26 * Settings::getInstance()->getScaleHeight()},
+                                {0, -20 * Settings::getInstance()->getScaleHeight()},
+                                {0, -15 * Settings::getInstance()->getScaleHeight()},
+                                {0, -13 * Settings::getInstance()->getScaleHeight()},
+                                {0, -8 * Settings::getInstance()->getScaleHeight()},
+                                {0, -3 * Settings::getInstance()->getScaleHeight()},});
+                anim->getSprite()->setPosition(FightScreen::getCoordsOfIndex(turnOrder.top()) +
+                                               sf::Vector2f(20 * Settings::getInstance()->getScaleWidth(),
+                                                            80 * Settings::getInstance()->getScaleWidth()));
                 anim->getSprite()->setFont(this->font);
                 this->animations.push_back(anim);
                 this->endEntityTurn();
             }
         }
+    }
     this->mapPanel->draw(window);
 //    if(this->characterPanel[this->selectedEntity]){
 //        this->characterPanel[this->selectedEntity]->draw(window);
